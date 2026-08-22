@@ -52,10 +52,21 @@ if is_custom_theme; then
     hyprctl reload >/dev/null 2>&1 || true
   fi
   deploy_plugins
-  omarchy-shell shell rescanPlugins >/dev/null 2>&1 || true
-  sleep 1
-  omarchy bar use pop.bar >/dev/null 2>&1 || true
-  swap_widgets pop.menu pop.workspaces
+
+  # Self-heal: if the custom plugins are incomplete (e.g. a broken clone
+  # missing BarModel.js / MenuModel.js), fall back to the stock bar and
+  # widgets instead of letting the bar vanish.
+  if [[ -f "$HOME/.config/omarchy/plugins/pop.bar/BarModel.js" && \
+        -f "$HOME/.config/omarchy/plugins/pop.menu/MenuModel.js" ]]; then
+    omarchy-shell shell rescanPlugins >/dev/null 2>&1 || true
+    sleep 1
+    omarchy bar use pop.bar >/dev/null 2>&1 || true
+    swap_widgets pop.menu pop.workspaces
+  else
+    omarchy-notification-send "Pop theme plugins incomplete — falling back to defaults" -t 5000 || true
+    omarchy bar use omarchy.bar >/dev/null 2>&1 || true
+    swap_widgets omarchy.menu omarchy.workspaces
+  fi
 else
   omarchy bar use omarchy.bar >/dev/null 2>&1 || true
   swap_widgets omarchy.menu omarchy.workspaces
