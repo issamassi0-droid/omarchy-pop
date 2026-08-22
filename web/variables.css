@@ -1,0 +1,276 @@
+/* variables.css */
+/* Omarchy Theme - Modified Pop */
+/* Web Variables for CSS Custom Properties */
+
+:root {
+    /* Base Colors */
+    --omarchy-background: #30302f;
+    --omarchy-foreground: #d1ccc3;
+    
+    /* Surface Colors */
+    --omarchy-surface0: #30302f;
+    --omarchy-surface1: #505048;
+    --omarchy-surface2: #686860;
+    --omarchy-surface3: #909080;
+    
+    /* Border Colors (1px with 0.6 alpha) */
+    --omarchy-border: rgba(210, 203, 189, 0.6);
+    --omarchy-border-active: rgba(210, 203, 189, 0.8);
+    --omarchy-border-inactive: rgba(80, 80, 72, 0.4);
+    
+    /* Text Colors */
+    --omarchy-text-primary: #d1ccc3;
+    --omarchy-text-secondary: #909080;
+    --omarchy-text-muted: #686860;
+    
+    /* Accent Colors */
+    --omarchy-accent: #d2cbbd;
+    --omarchy-accent-alpha: rgba(210, 203, 189, 0.6);
+    
+    /* UI Element Colors */
+    --omarchy-button-background: #505048;
+    --omarchy-button-hover: #686860;
+    --omarchy-button-active: #909080;
+    --omarchy-button-text: #d1ccc3;
+    
+    /* Selection Colors */
+    --omarchy-selection-background: #909080;
+    --omarchy-selection-text: #d1ccc3;
+    
+    /* Shadow */
+    --omarchy-shadow: rgba(0, 0, 0, 0.267);
+    
+    /* Typography */
+    --omarchy-font-family: 'JetBrainsMono Nerd Font', 'SF Mono', 'Fira Code', monospace;
+    --omarchy-font-size: 13px;
+    --omarchy-line-height: 1.6;
+    
+    /* Layout */
+    --omarchy-border-radius: 5px;
+    --omarchy-border-width: 1px;
+    --omarchy-spacing: 4px;
+    --omarchy-padding: 8px;
+    
+    /* Scrollbar */
+    --omarchy-scrollbar-track: #30302f;
+    --omarchy-scrollbar-thumb: #686860;
+    --omarchy-scrollbar-thumb-hover: #909080;
+    
+    /* Links */
+    --omarchy-link-color: #d2cbbd;
+    --omarchy-link-hover: #d1ccc3;
+    --omarchy-link-visited: #909080;
+    
+    /* Form Elements */
+    --omarchy-input-background: #505048;
+    --omarchy-input-text: #d1ccc3;
+    --omarchy-input-border: rgba(210, 203, 189, 0.6);
+    --omarchy-input-focus: rgba(210, 203, 189, 0.8);
+    --omarchy-input-placeholder: #686860;
+    
+    /* Code Blocks */
+    --omarchy-code-background: #505048;
+    --omarchy-code-text: #d1ccc3;
+    --omarchy-code-border: rgba(210, 203, 189, 0.6);
+    
+    /* Table */
+    --omarchy-table-border: rgba(210, 203, 189, 0.6);
+    --omarchy-table-header: #505048;
+    --omarchy-table-row-hover: #686860;
+    
+    /* Tooltips */
+    --omarchy-tooltip-background: #30302f;
+    --omarchy-tooltip-text: #d1ccc3;
+    --omarchy-tooltip-border: rgba(210, 203, 189, 0.6);
+    
+    /* Progress Bars */
+    --omarchy-progress-background: #505048;
+    --omarchy-progress-fill: #909080;
+    
+    /* Status Colors */
+    --omarchy-success: #909080;
+    --omarchy-warning: #686860;
+    --omarchy-error: #686860;
+    --omarchy-info: #d1ccc3;
+}
+
+/* Example usage classes */
+.omarchy-theme {
+    background-color: var(--omarchy-background);
+    color: var(--omarchy-foreground);
+    font-family: var(--omarchy-font-family);
+    font-size: var(--omarchy-font-size);
+    line-height: var(--omarchy-line-height);
+}
+
+.omarchy-surface {
+    background-color: var(--omarchy-surface1);
+    border: var(--omarchy-border-width) solid var(--omarchy-border);
+    border-radius: var(--omarchy-border-radius);
+    padding: var(--omarchy-padding);
+}
+
+.omarchy-button {
+    background-color: var(--omarchy-button-background);
+    color: var(--omarchy-button-text);
+    border: var(--omarchy-border-width) solid var(--omarchy-border);
+    border-radius: var(--omarchy-border-radius);
+    padding: calc(var(--omarchy-padding) / 2) var(--omarchy-padding);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.omarchy-button:hover {
+    background-color: var(--omarchy-button-hover);
+    border-color: var(--omarchy-border-active);
+}
+
+.omarchy-button:active {
+    background-color: var(--omarchy-button-active);
+}
+
+.omarchy-input {
+    background-color: var(--omarchy-input-background);
+    color: var(--omarchy-input-text);
+    border: var(--omarchy-border-width) solid var(--omarchy-input-border);
+    border-radius: var(--omarchy-border-radius);
+    padding: calc(var(--omarchy-padding) / 2) var(--omarchy-padding);
+    font-family: var(--omarchy-font-family);
+    font-size: var(--omarchy-font-size);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.omarchy-input:focus {
+    border-color: var(--omarchy-input-focus);
+    outline: none;
+}
+
+.omarchy-input::placeholder {
+    color: var(--omarchy-input-placeholder);
+}
+
+.omarchy-link {
+    color: var(--omarchy-link-color);
+    text-decoration: none;
+    border-bottom: var(--omarchy-border-width) solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.omarchy-link:hover {
+    color: var(--omarchy-link-hover);
+    border-bottom-color: var(--omarchy-border-active);
+}
+
+.omarchy-code {
+    background-color: var(--omarchy-code-background);
+    color: var(--omarchy-code-text);
+    border: var(--omarchy-border-width) solid var(--omarchy-code-border);
+    border-radius: calc(var(--omarchy-border-radius) / 2);
+    padding: 0.2em 0.4em;
+    font-family: var(--omarchy-font-family);
+    font-size: 0.9em;
+}
+
+.omarchy-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: var(--omarchy-border-width) solid var(--omarchy-table-border);
+}
+
+.omarchy-table th,
+.omarchy-table td {
+    padding: var(--omarchy-padding);
+    border: var(--omarchy-border-width) solid var(--omarchy-table-border);
+    text-align: left;
+}
+
+.omarchy-table th {
+    background-color: var(--omarchy-table-header);
+    color: var(--omarchy-foreground);
+}
+
+.omarchy-table tr:hover {
+    background-color: var(--omarchy-table-row-hover);
+}
+
+.omarchy-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--omarchy-scrollbar-thumb) var(--omarchy-scrollbar-track);
+}
+
+.omarchy-scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.omarchy-scrollbar::-webkit-scrollbar-track {
+    background: var(--omarchy-scrollbar-track);
+    border: var(--omarchy-border-width) solid var(--omarchy-border);
+}
+
+.omarchy-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--omarchy-scrollbar-thumb);
+    border: var(--omarchy-border-width) solid var(--omarchy-border);
+    border-radius: calc(var(--omarchy-border-radius) / 2);
+}
+
+.omarchy-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--omarchy-scrollbar-thumb-hover);
+}
+
+/* Utility Classes */
+.omarchy-border {
+    border: var(--omarchy-border-width) solid var(--omarchy-border);
+}
+
+.omarchy-border-top {
+    border-top: var(--omarchy-border-width) solid var(--omarchy-border);
+}
+
+.omarchy-border-bottom {
+    border-bottom: var(--omarchy-border-width) solid var(--omarchy-border);
+}
+
+.omarchy-border-left {
+    border-left: var(--omarchy-border-width) solid var(--omarchy-border);
+}
+
+.omarchy-border-right {
+    border-right: var(--omarchy-border-width) solid var(--omarchy-border);
+}
+
+.omarchy-rounded {
+    border-radius: var(--omarchy-border-radius);
+}
+
+.omarchy-rounded-full {
+    border-radius: 9999px;
+}
+
+.omarchy-shadow {
+    box-shadow: 0 4px 6px var(--omarchy-shadow);
+}
+
+.omarchy-text-secondary {
+    color: var(--omarchy-text-secondary);
+}
+
+.omarchy-text-muted {
+    color: var(--omarchy-text-muted);
+}
+
+.omarchy-bg-surface {
+    background-color: var(--omarchy-surface1);
+}
+
+.omarchy-bg-surface2 {
+    background-color: var(--omarchy-surface2);
+}
+
+.omarchy-p-1 { padding: var(--omarchy-padding); }
+.omarchy-p-2 { padding: calc(var(--omarchy-padding) * 2); }
+.omarchy-m-1 { margin: var(--omarchy-spacing); }
+.omarchy-m-2 { margin: calc(var(--omarchy-spacing) * 2); }
+.omarchy-gap-1 { gap: var(--omarchy-spacing); }
+.omarchy-gap-2 { gap: calc(var(--omarchy-spacing) * 2); }

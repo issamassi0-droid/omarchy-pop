@@ -1,0 +1,17 @@
+# alacritty.toml
+[colors]
+# Primary colors
+primary = { background = "#30302f", foreground = "#d1ccc3" }
+
+# Normal colors
+normal = { black = "#30302f", red = "#686860", green = "#909080", yellow = "#505048", blue = "#d1ccc3", magenta = "#909080", cyan = "#505048", white = "#d1ccc3" }
+
+# Bright colors
+bright = { black = "#686860", red = "#909080", green = "#d1ccc3", yellow = "#505048", blue = "#909080", magenta = "#d1ccc3", cyan = "#686860", white = "#d1ccc3" }
+
+[window]
+padding = { x = 10, y = 10 }
+decorations = "None"
+
+[font]
+size = 12

@@ -1,0 +1,46 @@
+/* wofi.css */
+* {
+    border: none;
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+}
+
+window {
+    margin: 0px;
+    border: 1px solid rgba(210, 203, 189, 0.8);
+    background-color: rgba(48, 48, 47, 0.95);
+    border-radius: 8px;
+}
+
+#input {
+    padding: 4px;
+    margin: 4px;
+    border: 1px solid rgba(210, 203, 189, 0.6);
+    color: #d1ccc3;
+    background-color: #505048;
+}
+
+#inner-box {
+    margin: 4px;
+    border: none;
+    background-color: transparent;
+}
+
+#outer-box {
+    margin: 2px;
+    border: none;
+    background-color: transparent;
+}
+
+#scroll {
+    margin: 0px;
+    border: none;
+}
+
+#text {
+    margin: 2px;
+    color: #d1ccc3;
+}
+
+#entry:selected {
+    background-color: #909080;
+}

@@ -1,0 +1,9 @@
+# pop palette — single source of truth
+# Ordered dark -> light
+
+base    = #34332f   # (52,51,47)    background / darkest
+surface = #505048   # (80,80,72)    panels, menus
+surface2= #686860   # (104,104,96)  elevated, borders
+muted   = #909080   # (144,144,128) dimmed foreground
+border  = #aaa69a   # (170,166,154) hairline borders
+text    = #d1ccc3   # (209,204,195) foreground / lightest
