@@ -31,6 +31,21 @@ deploy_plugins() {
   done
 }
 
+# Point the bar layout's menu/workspaces widgets at the given plugin ids. The
+# theme ships pop.menu / pop.workspaces but shell.json still references the
+# built-in omarchy.menu / omarchy.workspaces, so without this swap the custom
+# menu and workspace indicator never render.
+swap_widgets() {
+  local shell="$HOME/.config/omarchy/shell.json"
+  local menu="$1" works="$2"
+  [[ -f "$shell" ]] || return 0
+  command -v jq >/dev/null 2>&1 || return 0
+  jq --arg m "$menu" --arg w "$works" '
+    (.bar.layout.left // [])  |= map(if (.id == "omarchy.menu" or .id == "pop.menu")      then .id = $m else . end) |
+    (.bar.layout.right // []) |= map(if (.id == "omarchy.workspaces" or .id == "pop.workspaces") then .id = $w else . end)
+  ' "$shell" > "$shell.tmp" && mv "$shell.tmp" "$shell"
+}
+
 if is_custom_theme; then
   if [[ -f "$CURRENT_THEME_DIR/looknfeel.lua" ]]; then
     cp "$CURRENT_THEME_DIR/looknfeel.lua" "$HYPR_CONF_DIR/looknfeel.lua"
@@ -40,6 +55,8 @@ if is_custom_theme; then
   omarchy-shell shell rescanPlugins >/dev/null 2>&1 || true
   sleep 1
   omarchy bar use pop.bar >/dev/null 2>&1 || true
+  swap_widgets pop.menu pop.workspaces
 else
   omarchy bar use omarchy.bar >/dev/null 2>&1 || true
+  swap_widgets omarchy.menu omarchy.workspaces
 fi
