@@ -31,12 +31,31 @@ the window borders everywhere.
 - The custom plugins bundled in this repo: `pop.menu`, `pop.workspaces`,
   `pop.bar`. They are deployed automatically by the theme-set hook.
 
-## Install via GitHub
+## Install
+
+### One command
+
+Run the bundled installer (it clones the theme, registers the hook, and applies
+it — no extra steps):
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/issamassi0-droid/omarchy-pop/master/install.sh)"
+```
+
+Or, if you already cloned the repo (or want to install from a local path):
+
+```bash
+git clone https://github.com/issamassi0-droid/omarchy-pop.git \
+  ~/.config/omarchy/themes/pop
+bash ~/.config/omarchy/themes/pop/install.sh
+```
+
+### Manual steps
 
 1. **Clone the theme** into your Omarchy themes directory:
 
    ```bash
-   git clone https://github.com/<your-username>/omarchy-pop.git \
+   git clone https://github.com/issamassi0-droid/omarchy-pop.git \
      ~/.config/omarchy/themes/pop
    ```
 
@@ -60,6 +79,12 @@ the window borders everywhere.
    # or: omarchy theme set "Omarchy Pop"
    ```
 
+> **Why a hook?** `omarchy theme install` / `omarchy theme set` only apply the
+> theme's base surface (colors, backgrounds, terminal/GTK configs). The custom
+> `pop.bar` / `pop.menu` / `pop.workspaces` plugins and the orange window
+> borders are wired up by this theme's `theme-set` hook, which the packaged
+> installer does not copy for you.
+
 On `omarchy theme set`, the hook:
 
 1. Copies `looknfeel.lua` from the theme into `~/.config/hypr/looknfeel.lua`
@@ -67,7 +92,13 @@ On `omarchy theme set`, the hook:
    `no_anim` menu rule).
 2. Deploys the bundled `plugins/pop.*` QML + manifest files into
    `~/.config/omarchy/plugins/`.
-3. Switches the bar to `pop.bar`.
+3. Switches the bar to `pop.bar` and swaps the menu/workspaces widgets to
+   `pop.menu` / `pop.workspaces`.
+
+**Self-healing:** if the bundled `pop.bar/BarModel.js` or `pop.menu/MenuModel.js`
+is missing (e.g. a broken clone), the hook falls back to the stock
+`omarchy.bar` / `omarchy.menu` / `omarchy.workspaces` and shows a notification,
+so the bar never disappears.
 
 For any **other** theme the hook switches the bar back to `omarchy.bar`; the
 `pop.*` plugins only affect the `pop` context, so there is no cross-theme
@@ -100,8 +131,9 @@ After editing, re-run `omarchy theme set Pop` to re-deploy.
 
 ```
 omarchy-pop/
+├── install.sh                  # one-command installer (clone + hook + apply)
 ├── hooks/
-│   └── pop-theme-set.sh        # theme-set hook (deploy + bar switch)
+│   └── pop-theme-set.sh        # theme-set hook (deploy + bar switch + fallback)
 ├── looknfeel.lua               # Hyprland look-and-feel (borders, no_anim)
 ├── hyprland.conf / hyprland.lua
 ├── shell.toml                  # [popups] + [hyprland] border config
