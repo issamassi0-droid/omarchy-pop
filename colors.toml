@@ -2,7 +2,7 @@
 # Omarchy Theme - Pop
 
 # Base and Background
-background = "#34332f"
+background = "#2c2b2a"
 foreground = "#d1ccc3"
 
 # Selection colors
@@ -33,7 +33,7 @@ color14 = "#9eb4b2"
 color15 = "#e3ded5"
 
 # Surfaces
-surface0 = "#34332f"
+surface0 = "#2c2b2a"
 surface1 = "#505048"
 surface2 = "#686860"
 surface3 = "#909080"

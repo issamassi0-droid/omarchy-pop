@@ -4,9 +4,9 @@
 
 -- Color Palette
 local colors = {
-    background = "rgba(30302fff)",
+    background = "rgba(2c2b2aff)",
     foreground = "rgba(d1ccc3ff)",
-    surface0 = "rgba(30302fff)",
+    surface0 = "rgba(2c2b2aff)",
     surface1 = "rgba(505048ff)",
     surface2 = "rgba(686860ff)",
     surface3 = "rgba(909080ff)",

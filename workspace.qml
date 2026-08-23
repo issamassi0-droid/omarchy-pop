@@ -27,7 +27,7 @@ BarWidget {
   }
 
   function workspaceIds() {
-    var ids = [1, 2, 3, 4, 5, 6, 7]
+    var ids = [1, 2, 3, 4, 5]
     var values = Hyprland.workspaces.values
 
     for (var i = 0; i < values.length; i++) {
