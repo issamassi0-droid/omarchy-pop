@@ -11,7 +11,7 @@ local colors = {
     surface2 = "rgba(686860ff)",
     surface3 = "rgba(909080ff)",
     border = "rgba(efae6499)", -- 0.6 alpha (99 = 60%)
-    border_active = "rgba(efae64d9)", -- 0.85 alpha for active
+    border_active = "rgba(efae64bf)", -- 0.75 alpha for active
     border_inactive = "rgba(efae6455)", -- 0.33 alpha
     shadow = "rgba(00000044)",
 }
@@ -26,7 +26,7 @@ monitor = {
 general = {
     gaps_in = 5,
     gaps_out = 10,
-    border_size = 1,
+    border_size = 2,
     col_active_border = colors.border_active,
     col_inactive_border = colors.border_inactive,
     layout = "dwindle",
