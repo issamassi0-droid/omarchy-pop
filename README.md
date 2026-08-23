@@ -50,6 +50,19 @@ git clone https://github.com/issamassi0-droid/omarchy-pop.git \
 bash ~/.config/omarchy/themes/pop/install.sh
 ```
 
+### Using the stock installer
+
+If you would rather use Omarchy's built-in command instead of the bundled
+script, the base install is a three-step chain: clone the theme with
+`omarchy theme install`, register its hook with `omarchy hook install`, then
+re-apply the theme so the hook runs:
+
+```bash
+omarchy theme install https://github.com/issamassi0-droid/omarchy-pop.git && \
+omarchy hook install theme-set ~/.config/omarchy/themes/pop/hooks/pop-theme-set.sh && \
+omarchy theme set pop
+```
+
 ### Manual steps
 
 1. **Clone the theme** into your Omarchy themes directory:
