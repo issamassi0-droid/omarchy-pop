@@ -96,7 +96,7 @@ windowrule = {
 -- Window Rules V2 (for more specific rules)
 windowrulev2 = {
     { rule = "bordersize 1", class = ".*" },
-    { rule = "rounding 0", class = ".*" },
+    { rule = "rounding 5", class = ".*" },
     { rule = "bordercolor " .. colors.border_active, class = ".*" },
 }
 

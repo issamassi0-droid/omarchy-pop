@@ -193,6 +193,7 @@ placessidebar row:hover,
 .nautilus-window placessidebar row:hover,
 .nautilus-window row:hover {
     background-color: @menu_hover_color;
+    border-radius: 3px;
 }
 
 placessidebar *:selected,
@@ -216,6 +217,7 @@ treeview.view:selected,
 .nautilus-window .view:selected {
     background-color: @sidebar_focus_color;
     background-image: none;
+    border-radius: 3px;
 }
 
 placessidebar *:selected label,
@@ -228,7 +230,51 @@ row:selected image,
     color: @foreground;
 }
 
+/* Nautilus icon/grid view (GTK4 NautilusGridView) */
+.nautilus-canvas-item:hover,
+.nautilus-window .nautilus-canvas-item:hover,
+.nautilus-window .nautilus-canvas-item:hover:selected,
+.nautilus-grid-view gridview > child.activatable:hover {
+    background-color: @menu_hover_color;
+    border-radius: 8px;
+}
+
+.nautilus-canvas-item:selected,
+.nautilus-canvas-item:focus,
+.nautilus-canvas-item:selected:focus,
+.nautilus-window .nautilus-canvas-item:selected,
+.nautilus-window .nautilus-canvas-item:focus,
+.nautilus-window .nautilus-canvas-item:selected:focus,
+.nautilus-grid-view gridview > child:selected,
+.nautilus-grid-view gridview > child:selected:hover,
+.nautilus-grid-view gridview > child:focus,
+.nautilus-grid-view gridview > child:selected:focus {
+    background-color: @sidebar_focus_color;
+    background-image: none;
+    border-radius: 8px;
+}
+
+.nautilus-canvas-item:selected label,
+.nautilus-canvas-item:selected image,
+.nautilus-window .nautilus-canvas-item:selected label,
+.nautilus-window .nautilus-canvas-item:selected image,
+.nautilus-grid-view gridview > child:selected label,
+.nautilus-grid-view gridview > child:selected image {
+    color: @foreground;
+}
+
 /* Sharp corners, Hyprland-inspired */
 * {
     border-radius: 0;
+}
+
+/* Window controls follow the active GTK theme (not forced sharp) */
+.titlebar button.close,
+.titlebar button.minimize,
+.titlebar button.maximize,
+headerbar button.close,
+headerbar button.minimize,
+headerbar button.maximize,
+windowcontrols button {
+    border-radius: 9999px;
 }

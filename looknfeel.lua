@@ -15,7 +15,7 @@ hl.config({
     },
 
     decoration = {
-        rounding = 0,
+        rounding = 5,
         active_opacity = 0.98,
         inactive_opacity = 0.94,
         fullscreen_opacity = 1.0,
@@ -91,11 +91,11 @@ hl.window_rule({
     rounding = 12,
 })
 
--- Quickshell panels – pinned, floating, no rounding
+-- Quickshell panels – pinned, floating
 hl.window_rule({
     match = "class:quickshell",
     opacity = 0.98,
-    rounding = 0,
+    rounding = 5,
 })
 
 hl.window_rule({
