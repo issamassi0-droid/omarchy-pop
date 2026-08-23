@@ -1,26 +1,33 @@
 # Omarchy Pop
 
-An orange-accented, square-cornered [Omarchy](https://github.com/omarchy/omarchy) theme.
-Every surface uses a zero-rounded **orange `#efae64`** border — 1px on windows
-and popups, 2px on the menu card and its hovered row — matched
-across windows, plugin popups, the menu, and the workspace indicator.
+An orange-accented [Omarchy](https://github.com/omarchy/omarchy) theme. Every
+surface uses a zero-rounded **orange `#efae64`** border — matched across windows,
+plugin popups, the menu, tooltips, notifications, and the workspace indicator.
 
 ## Look
 
 - **Window borders** — orange `#efae64`, 1px, square (`looknfeel.lua`,
-  `hyprland.conf` / `hyprland.lua`).
+  `hyprland.conf` / `hyprland.lua`). Smooth open/close animations are enabled
+  (the old `no_anim` menu layer rule was removed, so the menu frame now fades
+  in/out with the rest of the shell).
 - **Plugin popups** (calendar, audio, network, OSD, …) — orange `#efae64`,
-  1px, square (`shell.toml` → `[popups]` border = `hyprland.active-border`).
-- **Menu** (`pop.menu`) — square (`cornerRadius: 0`), an opaque `#34332f`
-  background matching the top bar, a 2px orange card border at 0.5 alpha, no
-  open/close animation (the Hyprland `no_anim` layer rule renders the border
-  instantly at full thickness), and a hovered row with an orange `#efae64`
-  background at 0.1 alpha plus a 2px orange border.
-- **Workspace indicator** (`pop.workspaces`) — focused workspace = orange
-  bubble; occupied/active = white-grey bubble with an orange number that matches
-  the bar background; empty = faint grey.
-- **Top bar** (`pop.bar`) — the bar itself has **no** border (the orange frame
-  lives on the popups/menu, not the bar).
+  2px, square (`shell.toml` → `[popups]` border `#efae64`, alpha 0.6, width 2).
+- **Notifications** — orange `#efae64` border (alpha 0.9, width 1.5) with white
+  text (`shell.toml` → `[notifications]`).
+- **Tooltips** — orange `#efae64` border (alpha 1.0, width 1.5) with white text
+  (`shell.toml` → `[tooltip]`).
+- **Menu** (`omarchy.menu`, stock) — an opaque `#34332f` background matching the
+  top bar, a thin orange `#efae64` card border at 0.6 alpha, and a hovered row
+  with an orange `#efae64` background at 0.15 alpha, a 2px orange border at 0.5
+  alpha, and white text. All of this is configured in `shell.menu.toml` /
+  `shell.toml` `[menu]` — no custom menu plugin is needed.
+- **Workspace indicator** (`pop.workspace`, a single `BarWidget` deployed from
+  the theme root) — focused workspace = an orange `#efae64` bubble (0.5 alpha)
+  inside a soft circular orange glow; occupied/active = a faint grey `#e6e3dd`
+  bubble (0.08 alpha); empty = faint grey. The geometry scales with the bar
+  size and the bubble, number, and glow are centered within each module.
+- **Top bar** (`omarchy.bar`, stock) — the bar itself has **no** border (the
+  orange frame lives on the popups / menu / workspace, not the bar).
 
 The orange is the active Hyprland window border color, so it stays in sync with
 the window borders everywhere.
@@ -28,8 +35,9 @@ the window borders everywhere.
 ## Requirements
 
 - [Omarchy](https://github.com/omarchy/omarchy) installed and running (Hyprland).
-- The custom plugins bundled in this repo: `pop.menu`, `pop.workspaces`,
-  `pop.bar`. They are deployed automatically by the theme-set hook.
+- The `pop.workspace` plugin, which is generated automatically by the theme-set
+  hook from `workspace.qml` + `workspace.manifest.json` at the theme root — there
+  are no hand-written plugins to install.
 
 ## Install
 
@@ -75,8 +83,8 @@ omarchy theme set pop
    (Prefer it somewhere else? Clone anywhere and symlink it instead:
    `ln -s /path/to/omarchy-pop ~/.config/omarchy/themes/pop`.)
 
-2. **Install the theme-set hook** so the custom plugins and bar are deployed on
-   every `omarchy theme set`:
+2. **Install the theme-set hook** so the workspace plugin and window borders are
+   deployed on every `omarchy theme set`:
 
    ```bash
    mkdir -p ~/.config/omarchy/hooks/theme-set.d
@@ -93,50 +101,57 @@ omarchy theme set pop
    ```
 
 > **Why a hook?** `omarchy theme install` / `omarchy theme set` only apply the
-> theme's base surface (colors, backgrounds, terminal/GTK configs). The custom
-> `pop.bar` / `pop.menu` / `pop.workspaces` plugins and the orange window
-> borders are wired up by this theme's `theme-set` hook, which the packaged
-> installer does not copy for you.
+> theme's base surface (colors, backgrounds, terminal/GTK configs). The
+> `pop.workspace` plugin and the orange window borders are wired up by this
+> theme's `theme-set` hook, which the packaged installer does not copy for you.
 
 On `omarchy theme set`, the hook:
 
 1. Copies `looknfeel.lua` from the theme into `~/.config/hypr/looknfeel.lua`
-   and runs `hyprctl reload` (applies orange square window borders + the
-   `no_anim` menu rule).
-2. Deploys the bundled `plugins/pop.*` QML + manifest files into
-   `~/.config/omarchy/plugins/`.
-3. Switches the bar to `pop.bar` and swaps the menu/workspaces widgets to
-   `pop.menu` / `pop.workspaces`.
+   and runs `hyprctl reload` (applies orange square window borders).
+2. Deploys `workspace.qml` + `workspace.manifest.json` from the theme root into
+   `~/.config/omarchy/plugins/pop.workspace/`.
+3. Switches the bar to the stock `omarchy.bar` and sets the left widgets to
+   `omarchy.menu` + `pop.workspace` (the workspace indicator sits inline right
+   after the menu icon).
+4. Removes the legacy `pop.bar` / `pop.menu` / `pop.workspaces` plugins if
+   present.
+5. Restarts the shell to settle the in-place reloads.
 
-**Self-healing:** if the bundled `pop.bar/BarModel.js` or `pop.menu/MenuModel.js`
-is missing (e.g. a broken clone), the hook falls back to the stock
-`omarchy.bar` / `omarchy.menu` / `omarchy.workspaces` and shows a notification,
+**Self-healing:** if `workspace.qml` / `workspace.manifest.json` are missing,
+the hook falls back to the stock `omarchy.workspaces` and shows a notification,
 so the bar never disappears.
 
-For any **other** theme the hook switches the bar back to `omarchy.bar`; the
-`pop.*` plugins only affect the `pop` context, so there is no cross-theme
-leakage.
+For any **other** theme the hook switches the bar back to `omarchy.bar` and
+removes the `pop.workspace` plugin; nothing leaks across themes.
 
 ## How it works
 
 - **Borders** are defined in `hyprland.conf` / `hyprland.lua` and reinforced in
   `looknfeel.lua` (color `#efae64`, `rounding = 0`).
-- **Menu border fix**: `pop.menu/Menu.qml` binds the card border to
-  `Color.menu.border` with a fallback to `#efae64` so the 1px orange border is
-  drawn on the very first frame (a QML `color` defaults to transparent until
-  `Color` resolves, which previously made the border look thinner/absent on
-  first open).
-- **No menu animation**: a `layer_rule` for `namespace:omarchy-menu` sets
-  `no_anim = true, animation = "none"` so the menu frame appears instantly.
-  Other windows keep their normal animations.
+- **Menu styling is pure config**: `shell.menu.toml` (and `shell.toml`
+  `[menu]`) set the card border and the hovered-row background / border / text.
+  The stock `omarchy.menu` reads these `Color.menu.*` tokens, so no custom menu
+  plugin is required.
+- **Menu animation**: the `namespace:omarchy-menu` layer rule no longer sets
+  `no_anim`; the menu fades in/out with the rest of the shell.
+- **Workspace plugin**: `workspace.qml` is a self-contained `BarWidget` (id
+  `pop.workspace` via `workspace.manifest.json`). The hook copies it into the
+  live plugin dir on every `omarchy theme set`, so edits to the theme-root file
+  are picked up on re-apply.
 
 ## Customization
 
-- **Border color**: set `[hyprland] active-border` and `[menu] border` in
-  `shell.toml`, and `Color.menu.border` in `pop.menu/Menu.qml`
-  (`Border.flat(Color.menu.border.a > 0 ? Color.menu.border : "#efae64", 1)`).
-- **Workspace colors**: edit `neonGreen` (focused orange) and `neonRed`
-  (active white-grey) at the top of `pop.workspaces/Workspaces.qml`.
+- **Border color**: set `[hyprland] active-border` and the `border` keys in
+  `shell.toml` (`[popups]`, `[notifications]`, `[tooltip]`, `[menu]`) and
+  `shell.menu.toml` (`[menu]`).
+- **Menu hover**: tune `selected-background` / `selected-background-alpha`,
+  `selected-border` / `selected-border-alpha` / `selected-border-width`, and
+  `selected-text` in `shell.menu.toml` `[menu]`.
+- **Workspace colors**: edit `neonGreen` (focused orange `#efae64`) and
+  `neonRed` (active grey `#e6e3dd`) at the top of `workspace.qml`; the
+  bubble/glow alphas are the `focusBubbleColor` / `activeBubbleColor`
+  properties just below.
 
 After editing, re-run `omarchy theme set Pop` to re-deploy.
 
@@ -146,16 +161,14 @@ After editing, re-run `omarchy theme set Pop` to re-deploy.
 omarchy-pop/
 ├── install.sh                  # one-command installer (clone + hook + apply)
 ├── hooks/
-│   └── pop-theme-set.sh        # theme-set hook (deploy + bar switch + fallback)
-├── looknfeel.lua               # Hyprland look-and-feel (borders, no_anim)
+│   └── pop-theme-set.sh        # theme-set hook (deploy workspace + bar switch)
+├── looknfeel.lua               # Hyprland look-and-feel (orange square borders)
 ├── hyprland.conf / hyprland.lua
-├── shell.toml                  # [popups] + [hyprland] border config
-├── shell.menu.toml
+├── shell.toml                  # [popups]/[notifications]/[tooltip]/[menu] borders
+├── shell.menu.toml             # [menu] card + hovered-row styling
 ├── colors.toml
-├── plugins/
-│   ├── pop.menu/               # Menu.qml + manifest.json + BarWidget.qml
-│   ├── pop.workspaces/         # Workspaces.qml + manifest.json
-│   └── pop.bar/                # Bar.qml + manifest.json
+├── workspace.qml               # single BarWidget (deployed as pop.workspace)
+├── workspace.manifest.json     # manifest for pop.workspace
 ├── quickshell/
 │   └── Theme.qml               # Quickshell border/borderRadius tokens
 └── README.md
@@ -167,7 +180,8 @@ omarchy-pop/
 omarchy theme set Ash            # or any other theme
 rm ~/.config/omarchy/themes/pop  # remove the symlink / clone
 rm ~/.config/omarchy/hooks/theme-set.d/pop-theme-set.sh
+rm -rf ~/.config/omarchy/plugins/pop.workspace
 ```
 
-The `pop.*` plugins left in `~/.config/omarchy/plugins/` are harmless (they are
-only used by the `pop` bar); remove them too if you want a clean slate.
+The `pop.workspace` plugin left in `~/.config/omarchy/plugins/` is harmless (it
+is only used by the `pop` bar); remove it too if you want a clean slate.

@@ -81,13 +81,13 @@ BarWidget {
   readonly property color accentColor: root.bar ? root.bar.urgent : Color.bar.active
   readonly property string fontFamily: root.bar ? root.bar.fontFamily : Style.font.family
 
-  // --- Fusion module geometry ---
-  readonly property int moduleWidth: Math.max(14, Math.round(root.barSize - 6))
-  readonly property int moduleHeight: 18
+  // --- Fusion module geometry (mid size, scales with font/bar) ---
+  readonly property int moduleWidth: Math.max(14, Math.round(root.barSize - 7))
+  readonly property int moduleHeight: Math.max(15, Math.round(root.barSize * 0.72))
   readonly property int moduleGap: Style.spacing.xxs
-  readonly property int bubbleSize: Math.max(6, Math.round(moduleHeight - 10))
+  readonly property int bubbleSize: Math.max(6, Math.round(moduleHeight - 9))
   readonly property int bubbleRadius: Math.round(bubbleSize / 2)
-  readonly property int numberSize: Math.max(8, Math.round(moduleHeight * 0.6))
+  readonly property int numberSize: Math.max(8, Math.round(moduleHeight * 0.62))
   readonly property real trailingGap: 2
   readonly property int moduleCount: root.workspaceIds().length
   readonly property int verticalNudge: 1
@@ -115,7 +115,7 @@ BarWidget {
 
   // Activated workspace not focused (occupied): red, same alphas
   readonly property color activeSurfaceColor: Util.alpha(root.neonRed, 0.05)
-  readonly property color activeBubbleColor: Util.alpha(root.neonRed, 0.15)
+  readonly property color activeBubbleColor: Util.alpha(root.neonRed, 0.08)
   readonly property color activeBorderColor: Util.alpha(root.neonRed, 0.3)
 
   implicitWidth: root.vertical ? moduleWidth : moduleCount * moduleWidth + moduleGap * (moduleCount - 1) + trailingGap
@@ -123,9 +123,9 @@ BarWidget {
 
   Loader {
     x: 0
-    y: root.verticalNudge
+    y: root.vertical ? 0 : Math.round((root.barSize - root.moduleHeight) / 2)
     width: parent.width
-    height: parent.height
+    height: root.vertical ? parent.height : root.moduleHeight
     sourceComponent: root.vertical ? verticalStack : horizontalRow
   }
 
@@ -200,7 +200,7 @@ BarWidget {
     Rectangle {
       id: moduleSurface
       anchors.fill: parent
-      radius: 6
+      radius: 5
       color: module.focused ? root.focusSurfaceColor : (module.active ? root.activeSurfaceColor : (hoverArea.containsMouse ? root.surfaceHoverColor : root.surfaceColor))
       border.color: module.focused ? root.focusBorderColor : (hoverArea.containsMouse ? root.borderHoverColor : (module.active ? root.activeBorderColor : root.borderColor))
       border.width: module.focused || module.active ? 1 : 1
@@ -213,26 +213,32 @@ BarWidget {
         visible: module.focused || module.active
         anchors.fill: parent
         readonly property color glowColor: module.focused ? root.neonGreen : root.neonRed
+        readonly property int cx: module.width / 2
+        readonly property int cy: module.height / 2
+
         Rectangle {
-          width: Math.max(root.moduleWidth - 4, 1)
-          height: Math.max(root.moduleHeight - 4, 1)
-          radius: 8
-          color: Util.alpha(parent.glowColor, 0.16)
-          anchors.centerIn: parent
+          width: root.bubbleSize + 12
+          height: root.bubbleSize + 12
+          radius: width / 2
+          color: Util.alpha(parent.glowColor, 0.05)
+          x: Math.round(parent.cx - width / 2)
+          y: Math.round(parent.cy - height / 2)
         }
         Rectangle {
-          width: Math.max(root.moduleWidth - 8, 1)
-          height: Math.max(root.moduleHeight - 8, 1)
-          radius: 6
+          width: root.bubbleSize + 6
+          height: root.bubbleSize + 6
+          radius: width / 2
           color: Util.alpha(parent.glowColor, 0.1)
-          anchors.centerIn: parent
+          x: Math.round(parent.cx - width / 2)
+          y: Math.round(parent.cy - height / 2)
         }
         Rectangle {
-          width: Math.max(root.moduleWidth - 14, 1)
-          height: Math.max(root.moduleHeight - 14, 1)
-          radius: 5
-          color: Util.alpha(parent.glowColor, 0.06)
-          anchors.centerIn: parent
+          width: root.bubbleSize
+          height: root.bubbleSize
+          radius: root.bubbleRadius
+          color: Util.alpha(parent.glowColor, 0.2)
+          x: Math.round(parent.cx - width / 2)
+          y: Math.round(parent.cy - height / 2)
         }
       }
 
@@ -243,14 +249,15 @@ BarWidget {
         height: root.bubbleSize
         radius: root.bubbleRadius
         color: module.focused ? root.focusBubbleColor : root.activeBubbleColor
-        anchors.centerIn: parent
+        x: Math.round((module.width - width) / 2)
+        y: Math.round((module.height - height) / 2)
       }
 
       // Number
       Text {
         id: numberLabel
-        anchors.centerIn: parent
-        anchors.verticalCenterOffset: 0.5
+        x: Math.round((module.width - width) / 2)
+        y: Math.round((module.height - height) / 2)
         text: module.wsId === 10 ? "0" : String(module.wsId)
         renderType: Text.QtRendering
         color: module.focused ? root.numberFocusColor : (module.active ? root.numberActiveColor : (module.occupied ? root.accentColor : root.foregroundColor))

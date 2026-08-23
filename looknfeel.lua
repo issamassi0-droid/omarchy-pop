@@ -72,14 +72,12 @@ hl.layer_rule({
     ignore_alpha = 0.7,
 })
 
--- Main menu – frosted glass surface. No open/close animation so the orange
--- border frame (incl. the top edge) renders instantly at full thickness.
+-- Main menu – frosted glass surface. Open/close animates normally so the
+-- border frame fades in with the rest of the card.
 hl.layer_rule({
     match = "namespace:omarchy-menu",
     blur = true,
     ignore_alpha = 0.2,
-    no_anim = true,
-    animation = "none",
 })
 
 -- ============================================================

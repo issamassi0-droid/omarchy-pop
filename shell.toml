@@ -70,10 +70,10 @@ selection-fill-alpha = 0.35
 # enabled, those dimensions grow/shrink with [font] base-size too. Per-token
 # overrides (in px) below pin individual values without affecting the rest
 # of the scale. Uncomment any to tune a specific surface.
-scale = 1.0
+scale = 0.9
 scale-with-font = true
 # xxs                       = 2
-# xs                        = 3
+xs                        = 0
 # sm                        = 4
 # md                        = 6
 # lg                        = 8
@@ -127,9 +127,9 @@ base-size = 12
 background       = "#34332f"
 background-alpha = 1.0
     text             = "#d1ccc3"
-    border           = "hyprland.active-border"
-    border-alpha     = 1.0
-    border-width     = 1
+    border           = "#efae64"
+    border-alpha     = 0.6
+    border-width     = 2
 
 [hyprland]
 active-border = "#efae64"
@@ -141,19 +141,20 @@ active-border-width = 1
 # 0.97 mirrors the legacy hard-coded tooltip opacity.
 background       = "#34332f"
 background-alpha = 0.97
-text             = "#d1ccc3"
-border           = "hyprland.active-border-foreground"
+text             = "#ffffff"
+border           = "#efae64"
 border-alpha     = 1.0
+border-width     = 1.5
 
 [notifications]
 background       = "#34332f"
 background-alpha = 1.0
-text             = "#d1ccc3"
+text             = "#ffffff"
 # Conventionally matches the Hyprland active-window border. Border accepts
 # either a solid color or the full active-border gradient.
-border           = "hyprland.active-border"
-border-alpha     = 1.0
-# border-width     = 2
+border           = "#efae64"
+border-alpha     = 0.9
+border-width     = 1.5
 countdown        = "#8ea4a2"
 
 [launcher]
@@ -176,10 +177,14 @@ selected-border-alpha     = 0.25
 
 [menu]
 border = "#efae64"
-border-alpha = 0.5
+border-alpha = 0.6
 background = "#34332f"
-selected-background = "#45443f"
-selected-text = "#d1ccc3"
+selected-background = "#efae64"
+selected-background-alpha = 0.15
+selected-border = "#efae64"
+selected-border-alpha = 0.5
+selected-border-width = 2
+selected-text = "#ffffff"
 scrim = "#2b2a27"
 scrim-alpha = 0.0
 [polkit]

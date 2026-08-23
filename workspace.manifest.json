@@ -1,19 +1,19 @@
 {
   "schemaVersion": 1,
-  "id": "pop.workspaces",
-  "name": "My Workspaces",
+  "id": "pop.workspace",
+  "name": "Pop Workspaces",
   "version": "1.0.0",
   "author": "Omarchy",
-  "description": "Workspace number indicators",
+  "description": "Inline workspace number indicators",
   "kinds": [
     "bar-widget"
   ],
   "entryPoints": {
-    "barWidget": "Workspaces.qml"
+    "barWidget": "workspace.qml"
   },
   "barWidget": {
-    "displayName": "My Workspaces",
-    "description": "Workspace number indicators",
+    "displayName": "Pop Workspaces",
+    "description": "Inline workspace number indicators",
     "category": "Compositor",
     "allowMultiple": false
   },
