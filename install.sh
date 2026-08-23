@@ -4,10 +4,11 @@
 #
 # What it does:
 #   1. Clones the theme into ~/.config/omarchy/themes/pop (if not already there).
-#   2. Registers the theme-set hook so the custom bar/menu/workspaces plugins
-#      are deployed and the bar is switched on every `omarchy theme set`.
-#      The hook self-heals: if the bundled plugins are incomplete, it falls
-#      back to the stock omarchy.bar / omarchy.menu / omarchy.workspaces.
+#   2. Registers the theme-set hook so the workspace widget (pop.workspace) is
+#      deployed from the theme-root files and the bar is switched to the stock
+#      omarchy.bar with omarchy.menu + pop.workspace on every `omarchy theme set`.
+#      The hook self-heals: if workspace.qml / workspace.manifest.json are
+#      missing, it falls back to the stock omarchy.workspaces.
 #   3. Applies the theme (which runs the hook).
 #
 # Usage:

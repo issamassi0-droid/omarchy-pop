@@ -1,7 +1,7 @@
 #!/bin/bash
 # Pop theme extras (also handles foggy/sepia), applied on `omarchy theme set`.
-# - Copies the theme's looknfeel.lua (orange #efae64 window border + square
-#   corners) into the active Hyprland config.
+# - Copies the theme's looknfeel.lua (orange #efae64 window border — 2px, 0.75
+#   alpha — with square corners) into the active Hyprland config.
 # - Deploys the theme-bundled workspace widget (root workspace.qml +
 #   workspace.manifest.json) into the live plugin dir as pop.workspace.
 # - Switches the bar to the stock omarchy.bar and the left widgets to
