@@ -1,626 +1,166 @@
-/* gtk.css */
-/* Omarchy Theme - Modified Pop */
-/* Full GTK 3/4 Theme Configuration */
+/**
+ * Pop Theme — GTK3/GTK4 (Adwaita) color override
+ * Based on the Omarchy base theme; only the palette is changed
+ * to match the pop theme (palette.txt / colors.toml).
+ */
 
-/* ============================================
-   COLOR DEFINITIONS
-   ============================================ */
-
-/* Core Palette - Modified Pop */
-@define-color background #484543;
+/* Pop color palette */
+@define-color background #34332f;
 @define-color foreground #d1ccc3;
-@define-color black #484543;
-@define-color red #686860;
-@define-color green #909080;
-@define-color yellow #505048;
-@define-color blue #d1ccc3;
-@define-color magenta #909080;
-@define-color cyan #505048;
+
+@define-color black #34332f;
+@define-color red #b8705e;
+@define-color green #8a9a7b;
+@define-color yellow #c4a878;
+@define-color blue #8ea4a2;
+@define-color magenta #a292a3;
+@define-color cyan #8ea4a2;
 @define-color white #d1ccc3;
-@define-color bright_black #686860;
-@define-color bright_red #909080;
-@define-color bright_green #d1ccc3;
-@define-color bright_yellow #505048;
-@define-color bright_blue #909080;
-@define-color bright_magenta #d1ccc3;
-@define-color bright_cyan #686860;
-@define-color bright_white #d1ccc3;
-
-/* Border Color - 1px with 0.6 alpha */
-@define-color border_color alpha(#d2cbbd, 0.6);
-@define-color border_active alpha(#d2cbbd, 0.8);
-@define-color border_inactive alpha(#505048, 0.4);
-
-/* Surface Colors */
-@define-color surface0 #484543;
-@define-color surface1 #505048;
-@define-color surface2 #686860;
-@define-color surface3 #909080;
-
-/* Accent Colors */
-@define-color accent_bg_color #909080;
-@define-color accent_fg_color #d1ccc3;
-@define-color accent_color #d2cbbd;
-
-/* ============================================
-   WINDOW & BASE STYLES
-   ============================================ */
-
-* {
-    border-width: 1px;
-    border-style: solid;
-    border-color: @border_color;
-    outline-width: 1px;
-    outline-style: solid;
-    outline-color: @border_color;
-    -gtk-outline-radius: 4px;
-}
-
-window {
-    background-color: @background;
-    color: @foreground;
-}
-
-.background {
-    background-color: @background;
-    color: @foreground;
-}
-
-/* ============================================
-   HEADER BARS & TITLE BARS
-   ============================================ */
-
-headerbar,
-.titlebar,
-window.background > headerbar {
-    background-color: @background;
-    color: @foreground;
-    border-bottom: 1px solid @border_color;
-    box-shadow: none;
-}
-
-headerbar:backdrop,
-.titlebar:backdrop {
-    background-color: @surface0;
-    color: @bright_black;
-    border-bottom-color: @border_inactive;
-}
-
-headerbar .title,
-.titlebar .title {
-    color: @foreground;
-    font-weight: bold;
-}
-
-headerbar button,
-.titlebar button {
-    background-color: transparent;
-    color: @foreground;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-    padding: 4px 8px;
-}
-
-headerbar button:hover,
-.titlebar button:hover {
-    background-color: @surface1;
-    border-color: @border_active;
-}
-
-headerbar button:active,
-.titlebar button:active {
-    background-color: @surface2;
-}
-
-headerbar .path-bar button {
-    background-color: @surface1;
-    border-color: @border_color;
-}
-
-headerbar .path-bar button:hover {
-    background-color: @surface2;
-}
-
-/* ============================================
-   BUTTONS
-   ============================================ */
-
-button {
-    background-color: @surface1;
-    color: @foreground;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-    padding: 6px 12px;
-    transition: all 200ms ease;
-}
-
-button:hover {
-    background-color: @surface2;
-    border-color: @border_active;
-}
-
-button:active {
-    background-color: @surface3;
-    border-color: @border_active;
-}
-
-button:disabled {
-    background-color: @surface0;
-    color: @bright_black;
-    border-color: @border_inactive;
-}
-
-button.flat {
-    background-color: transparent;
-    border-color: transparent;
-}
-
-button.flat:hover {
-    background-color: @surface1;
-    border-color: @border_color;
-}
-
-button.suggested-action {
-    background-color: @surface2;
-    color: @foreground;
-    border-color: @border_active;
-}
-
-button.suggested-action:hover {
-    background-color: @surface3;
-}
-
-button.destructive-action {
-    background-color: @red;
-    color: @background;
-    border-color: alpha(@red, 0.6);
-}
-
-button.destructive-action:hover {
-    background-color: @bright_red;
-}
-
-button.titlebutton {
-    padding: 0 6px;
-    min-height: 20px;
-    min-width: 20px;
-}
-
-/* ============================================
-   ENTRIES & INPUT FIELDS
-   ============================================ */
-
-entry,
-spinbutton,
-combobox entry {
-    background-color: @surface1;
-    color: @foreground;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-    padding: 4px 8px;
-    caret-color: @accent_color;
-}
-
-entry:focus,
-spinbutton:focus,
-combobox entry:focus {
-    border-color: @border_active;
-    outline: 2px solid alpha(@accent_color, 0.3);
-}
-
-entry:disabled,
-spinbutton:disabled {
-    background-color: @surface0;
-    color: @bright_black;
-    border-color: @border_inactive;
-}
-
-entry selection,
-spinbutton selection {
-    background-color: @surface3;
-    color: @foreground;
-}
-
-entry.progressbar {
-    background-color: @surface2;
-    border-color: @border_color;
-}
-
-/* ============================================
-   TEXT VIEW & SOURCE VIEW
-   ============================================ */
-
-textview,
-sourceview {
-    background-color: @surface1;
-    color: @foreground;
-}
-
-textview text,
-sourceview text {
-    background-color: @surface1;
-    color: @foreground;
-}
-
-textview text selection,
-sourceview text selection {
-    background-color: @surface3;
-    color: @foreground;
-}
-
-/* ============================================
-   SCROLLBARS
-   ============================================ */
-
-scrollbar {
-    background-color: @background;
-    border: none;
-}
-
-scrollbar trough {
-    background-color: @surface0;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-}
-
-scrollbar slider {
-    background-color: @surface2;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-}
-
-scrollbar slider:hover {
-    background-color: @surface3;
-    border-color: @border_active;
-}
-
-scrollbar slider:active {
-    background-color: @surface3;
-}
-
-/* ============================================
-   MENUS & POPOVERS
-   ============================================ */
-
-menu,
-menubar,
-popover,
-.context-menu {
-    background-color: @surface0;
-    color: @foreground;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-}
-
-menuitem,
-popover menu menuitem {
-    background-color: transparent;
-    color: @foreground;
-    padding: 4px 8px;
-}
-
-menuitem:hover,
-popover menu menuitem:hover {
-    background-color: @surface2;
-    color: @foreground;
-}
-
-menuitem:disabled,
-popover menu menuitem:disabled {
-    color: @bright_black;
-}
-
-menuitem accelerator {
-    color: @bright_black;
-}
-
-menuitem:hover accelerator {
-    color: @foreground;
-}
-
-popover .arrow {
-    color: @border_color;
-}
-
-/* ============================================
-   COMBOBOX & DROPDOWNS
-   ============================================ */
-
-combobox,
-dropdown {
-    background-color: @surface1;
-    color: @foreground;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-}
-
-combobox:hover,
-dropdown:hover {
-    border-color: @border_active;
-}
-
-combobox arrow,
-dropdown arrow {
-    color: @foreground;
-}
-
-/* ============================================
-   NOTEBOOKS & TABS
-   ============================================ */
-
-notebook {
-    background-color: @background;
-    border: 1px solid @border_color;
-}
-
-notebook header {
-    background-color: @surface0;
-    border-bottom: 1px solid @border_color;
-}
-
-notebook tab {
-    background-color: @surface0;
-    color: @bright_black;
-    border: 1px solid @border_color;
-    border-bottom: none;
-    padding: 6px 12px;
-}
-
-notebook tab:hover {
-    background-color: @surface1;
-    color: @foreground;
-}
-
-notebook tab:checked {
-    background-color: @surface1;
-    color: @foreground;
-    border-bottom-color: @background;
-}
-
-notebook tab:checked:hover {
-    background-color: @surface2;
-}
-
-/* ============================================
-   LIST BOX & TREE VIEW
-   ============================================ */
-
-listbox,
-treeview {
-    background-color: @surface1;
-    color: @foreground;
-}
-
-listbox row,
-treeview row {
-    background-color: @surface1;
-    color: @foreground;
-    border-bottom: 1px solid @border_color;
-    padding: 4px 8px;
-}
-
-listbox row:hover,
-treeview row:hover {
-    background-color: @surface2;
-}
-
-listbox row:selected,
-treeview row:selected {
-    background-color: @surface3;
-    color: @foreground;
-}
-
-listbox row:selected:hover,
-treeview row:selected:hover {
-    background-color: @surface3;
-}
-
-/* ============================================
-   TOOLBARS & ACTION BARS
-   ============================================ */
-
-toolbar {
-    background-color: @surface0;
-    border-bottom: 1px solid @border_color;
-    padding: 4px;
-}
-
-actionbar {
-    background-color: @surface0;
-    border-top: 1px solid @border_color;
-    padding: 4px;
-}
-
-/* ============================================
-   PANED & SEPARATORS
-   ============================================ */
-
-paned {
-    background-color: @background;
-}
-
-paned separator {
-    background-color: @border_color;
-}
-
-separator {
-    background-color: @border_color;
-}
-
-/* ============================================
-   TOGGLE SWITCHES
-   ============================================ */
-
-switch {
-    background-color: @surface1;
-    border: 1px solid @border_color;
-    border-radius: 8px;
-    padding: 0;
-}
-
-switch:hover {
-    border-color: @border_active;
-}
-
-switch slider {
-    background-color: @surface2;
-    border: 1px solid @border_color;
-    border-radius: 8px;
-}
-
-switch:checked {
-    background-color: @surface3;
-}
-
-switch:checked slider {
-    background-color: @surface3;
-    border-color: @border_active;
-}
-
-/* ============================================
-   CHECKBOXES & RADIO BUTTONS
-   ============================================ */
-
-checkbutton,
-radiobutton {
-    color: @foreground;
-}
-
-checkbutton check,
-radiobutton radio {
-    background-color: @surface1;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-}
-
-checkbutton check:checked,
-radiobutton radio:checked {
-    background-color: @surface3;
-    border-color: @border_active;
-    color: @foreground;
-}
-
-checkbutton check:hover,
-radiobutton radio:hover {
-    border-color: @border_active;
-}
-
-/* ============================================
-   PROGRESS BARS
-   ============================================ */
-
-progressbar {
-    background-color: @surface0;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-}
-
-progressbar trough {
-    background-color: @surface0;
-    border: none;
-}
-
-progressbar progress {
-    background-color: @surface2;
-    border: none;
-}
-
-/* ============================================
-   SPINNERS
-   ============================================ */
-
-spinner {
-    color: @accent_color;
-}
-
-spinner:disabled {
-    color: @bright_black;
-}
-
-/* ============================================
-   TOOLTIPS
-   ============================================ */
-
-tooltip {
-    background-color: @surface0;
-    color: @foreground;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-    padding: 4px 8px;
-}
-
-tooltip label {
-    color: @foreground;
-}
-
-/* ============================================
-   DIALOGS & MESSAGES
-   ============================================ */
-
+@define-color bright_black #505048;
+@define-color bright_red #c47f6e;
+@define-color bright_green #9aaa8b;
+@define-color bright_yellow #d4b888;
+@define-color bright_blue #9ab0c0;
+@define-color bright_magenta #b2a2b3;
+@define-color bright_cyan #9eb4b2;
+@define-color bright_white #e3ded5;
+
+/* Adwaita Color Overrides */
+@define-color accent_bg_color @blue;
+@define-color accent_fg_color @background;
+@define-color accent_color @cyan;
+
+@define-color window_bg_color @background;
+@define-color window_fg_color @foreground;
+
+/* Sidebar background and content */
+@define-color view_bg_color @black;
+@define-color view_fg_color @foreground;
+@define-color sidebar_bg_color @black;
+@define-color sidebar_fg_color @foreground;
+@define-color sidebar_backdrop_color @black;
+@define-color sidebar_shade_color @black;
+
+@define-color headerbar_bg_color @background;
+@define-color headerbar_fg_color @foreground;
+@define-color headerbar_backdrop_color @black;
+@define-color headerbar_shade_color @black;
+@define-color card_bg_color @background;
+@define-color card_fg_color @foreground;
+
+@define-color popover_bg_color @black;
+@define-color popover_fg_color @foreground;
+
+@define-color destructive_bg_color @red;
+@define-color destructive_fg_color @background;
+
+@define-color success_bg_color @green;
+@define-color success_fg_color @background;
+
+@define-color warning_bg_color @yellow;
+@define-color warning_fg_color @background;
+
+@define-color error_bg_color @red;
+@define-color error_fg_color @background;
+
+@define-color dialog_bg_color @background;
+@define-color dialog_fg_color @foreground;
+
+@define-color borders alpha(@foreground, 0.1);
+
+/* GTK3 Adwaita Legacy Color Variables */
+@define-color theme_fg_color @foreground;
+@define-color theme_text_color @foreground;
+@define-color theme_bg_color @background;
+@define-color theme_base_color @black;
+@define-color theme_selected_bg_color @blue;
+@define-color theme_selected_fg_color @background;
+@define-color insensitive_bg_color @background;
+@define-color insensitive_fg_color @bright_black;
+@define-color insensitive_base_color @black;
+@define-color theme_unfocused_fg_color @foreground;
+@define-color theme_unfocused_text_color @foreground;
+@define-color theme_unfocused_bg_color @background;
+@define-color theme_unfocused_base_color @black;
+@define-color theme_unfocused_selected_bg_color @blue;
+@define-color theme_unfocused_selected_fg_color @background;
+@define-color unfocused_insensitive_color @bright_black;
+@define-color unfocused_borders alpha(@foreground, 0.1);
+@define-color warning_color @yellow;
+@define-color error_color @red;
+@define-color success_color @green;
+@define-color destructive_color @red;
+
+/* Content View Colors */
+@define-color content_view_bg @black;
+@define-color text_view_bg @black;
+
+/* GtkMessageDialog styling */
+/* Target the entire dialog's background */
 messagedialog {
-    background-color: @surface0;
-    color: @foreground;
+    background-color: @dialog_bg_color;
 }
 
+/* Target the main message label inside the dialog */
 messagedialog label {
-    color: @foreground;
+    color: @dialog_fg_color;
     font-size: 14pt;
     font-weight: bold;
 }
 
+/* Target the secondary, more detailed text (if any) */
 messagedialog .secondary-text {
     font-size: 10pt;
     font-style: italic;
 }
 
+/* Target the buttons in the dialog's action area */
 messagedialog button {
-    background-color: @surface1;
+    background-color: @black;
     color: @foreground;
-    border: 1px solid @border_color;
+    border: 1px solid @bright_black;
     padding: 10px;
 }
 
 messagedialog button:hover {
-    background-color: @surface2;
-    border-color: @border_active;
+    background-color: @blue;
 }
 
-messagedialog button:active {
-    background-color: @surface3;
-}
-
-dialog,
-.alertdialog {
-    background-color: @surface0;
+banner revealer widget {
+    background: @bright_black;
+    padding: 5px;
     color: @foreground;
 }
 
-dialog .titlebar,
-.alertdialog .titlebar {
-    background-color: @background;
-    color: @foreground;
-    border-bottom: 1px solid @border_color;
+/* GtkAlertDialog styling */
+alertdialog.background {
+    background-color: @dialog_bg_color;
+    color: @dialog_fg_color;
 }
 
-dialog box,
-.alertdialog box {
-    background-color: @surface0;
+alertdialog .titlebar {
+    background-color: @headerbar_bg_color;
+    color: @headerbar_fg_color;
 }
 
-/* ============================================
-   FILE CHOOSER
-   ============================================ */
+alertdialog box {
+    background-color: @dialog_bg_color;
+}
+
+alertdialog label {
+    color: @dialog_fg_color;
+}
 
 filechooser .dialog-action-box {
-    border-top: 1px solid @border_color;
+    border-top: 1px solid @bright_black;
 }
 
 filechooser .dialog-action-box:backdrop {
-    border-top-color: @border_inactive;
+    border-top-color: @black;
 }
 
 filechooser #pathbarbox {
-    border-bottom: 1px solid @border_color;
+    border-bottom: 1px solid @bright_black;
 }
 
 filechooserbutton:drop(active) {
@@ -628,16 +168,9 @@ filechooserbutton:drop(active) {
     border-color: transparent;
 }
 
-/* ============================================
-   TOASTS & NOTIFICATIONS
-   ============================================ */
-
 toast {
-    background-color: @surface1;
+    background-color: @black;
     color: @foreground;
-    border: 1px solid @border_color;
-    border-radius: 8px;
-    padding: 8px 16px;
 }
 
 toast button.circular.flat.image-button:hover {
@@ -645,439 +178,57 @@ toast button.circular.flat.image-button:hover {
     background-color: @red;
 }
 
-/* ============================================
-   INFO BARS
-   ============================================ */
+/* Menu/hover item color — match Quickshell menu hover
+ * (shell.menu.toml: selected-background #859996 @ alpha 0.1) */
+@define-color menu_hover_color rgba(133, 153, 150, 0.28);
 
-infobar {
-    background-color: @surface1;
-    color: @foreground;
-    border: 1px solid @border_color;
+/* Focused/selected sidebar item — dark orange */
+@define-color sidebar_focus_color #a8542c;
+
+menuitem:hover,
+modelbutton:hover,
+modelbutton.flat:hover,
+row:hover,
+placessidebar row:hover,
+.nautilus-window placessidebar row:hover,
+.nautilus-window row:hover {
+    background-color: @menu_hover_color;
 }
 
-infobar.info {
-    background-color: @surface1;
+placessidebar *:selected,
+placessidebar row:selected,
+placessidebar row:focus,
+.nautilus-window placessidebar *:selected,
+.nautilus-window placessidebar row:selected,
+.nautilus-window placessidebar row:focus,
+.nautilus-window placessidebar row:selected:hover,
+.sidebar *:selected,
+.sidebar row:selected,
+.navigation-sidebar *:selected,
+.navigation-sidebar row:selected,
+list row:selected,
+list *:selected,
+row:selected:focus,
+row:selected,
+row:focus,
+.view:selected,
+treeview.view:selected,
+.nautilus-window .view:selected {
+    background-color: @sidebar_focus_color;
+    background-image: none;
 }
 
-infobar.warning {
-    background-color: @yellow;
-    color: @background;
-}
-
-infobar.question {
-    background-color: @surface2;
-}
-
-infobar.error {
-    background-color: @red;
-    color: @background;
-}
-
-/* ============================================
-   CALENDAR
-   ============================================ */
-
-calendar {
-    background-color: @surface1;
-    color: @foreground;
-    border: 1px solid @border_color;
-}
-
-calendar:selected {
-    background-color: @surface3;
-    color: @foreground;
-}
-
-calendar.header {
-    background-color: @surface0;
-    color: @foreground;
-}
-
-calendar.button {
-    background-color: transparent;
-    border: none;
-}
-
-/* ============================================
-   FLOW BOX
-   ============================================ */
-
-flowbox {
-    background-color: @background;
-}
-
-flowbox child {
-    background-color: @surface1;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-    padding: 4px;
-}
-
-flowbox child:hover {
-    background-color: @surface2;
-    border-color: @border_active;
-}
-
-flowbox child:selected {
-    background-color: @surface3;
-}
-
-/* ============================================
-   LINK BUTTON
-   ============================================ */
-
-linkbutton {
-    color: @accent_color;
-}
-
-linkbutton:hover {
+placessidebar *:selected label,
+.nautilus-window placessidebar *:selected label,
+.sidebar *:selected label,
+.navigation-sidebar *:selected label,
+row:selected label,
+row:selected image,
+.view:selected label {
     color: @foreground;
 }
 
-/* ============================================
-   LEVEL BAR
-   ============================================ */
-
-levelbar {
-    background-color: @surface0;
-    border: 1px solid @border_color;
-    border-radius: 4px;
+/* Sharp corners, Hyprland-inspired */
+* {
+    border-radius: 0;
 }
-
-levelbar block {
-    background-color: @surface2;
-}
-
-levelbar block.filled {
-    background-color: @surface3;
-}
-
-levelbar block.empty {
-    background-color: @surface0;
-}
-
-/* ============================================
-   ASSISTANT
-   ============================================ */
-
-assistant {
-    background-color: @background;
-    color: @foreground;
-}
-
-assistant .sidebar {
-    background-color: @surface0;
-    border-right: 1px solid @border_color;
-}
-
-/* ============================================
-   APP CHOOSER
-   ============================================ */
-
-appchooser {
-    background-color: @background;
-    color: @foreground;
-}
-
-appchooser button {
-    background-color: @surface1;
-    border: 1px solid @border_color;
-}
-
-appchooser button:hover {
-    background-color: @surface2;
-}
-
-/* ============================================
-   SHORTCUTS WINDOW
-   ============================================ */
-
-shortcuts-window {
-    background-color: @background;
-    color: @foreground;
-}
-
-shortcuts-section {
-    background-color: @surface1;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-    padding: 8px;
-}
-
-shortcuts-section-title {
-    color: @foreground;
-    font-weight: bold;
-}
-
-shortcuts-shortcut {
-    background-color: @surface2;
-    border: 1px solid @border_color;
-    border-radius: 2px;
-    padding: 2px 6px;
-}
-
-/* ============================================
-   COLOR CHOOSER
-   ============================================ */
-
-colorchooser {
-    background-color: @background;
-    color: @foreground;
-}
-
-colorchooser .color-editor {
-    background-color: @surface1;
-    border: 1px solid @border_color;
-}
-
-/* ============================================
-   FONT CHOOSER
-   ============================================ */
-
-fontchooser {
-    background-color: @background;
-    color: @foreground;
-}
-
-fontchooser .font-preview {
-    background-color: @surface1;
-    border: 1px solid @border_color;
-}
-
-/* ============================================
-   OVERLAY
-   ============================================ */
-
-overlay {
-    background-color: transparent;
-}
-
-/* ============================================
-   SCROLLED WINDOW
-   ============================================ */
-
-scrolledwindow {
-    background-color: @background;
-}
-
-scrolledwindow .frame {
-    border: 1px solid @border_color;
-}
-
-/* ============================================
-   EXPANDER
-   ============================================ */
-
-expander {
-    color: @foreground;
-}
-
-expander:hover {
-    color: @foreground;
-}
-
-/* ============================================
-   DROP DOWN
-   ============================================ */
-
-dropdown {
-    background-color: @surface1;
-    color: @foreground;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-    padding: 4px 8px;
-}
-
-dropdown:hover {
-    border-color: @border_active;
-}
-
-dropdown popover {
-    background-color: @surface0;
-    border: 1px solid @border_color;
-}
-
-/* ============================================
-   PREFERENCES GROUP
-   ============================================ */
-
-preferencesgroup {
-    background-color: @surface1;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-    padding: 8px;
-}
-
-/* ============================================
-   ACTION BUTTONS
-   ============================================ */
-
-actionbutton {
-    background-color: @surface1;
-    color: @foreground;
-    border: 1px solid @border_color;
-    border-radius: 4px;
-    padding: 4px;
-}
-
-actionbutton:hover {
-    background-color: @surface2;
-    border-color: @border_active;
-}
-
-/* ============================================
-   STATUS BAR
-   ============================================ */
-
-statusbar {
-    background-color: @surface0;
-    color: @foreground;
-    border-top: 1px solid @border_color;
-    padding: 4px 8px;
-}
-
-/* ============================================
-   GLOBAL MENU
-   ============================================ */
-
-globalmenu {
-    background-color: @background;
-    color: @foreground;
-    border-bottom: 1px solid @border_color;
-}
-
-/* ============================================
-   PANEL
-   ============================================ */
-
-panel {
-    background-color: @background;
-    color: @foreground;
-}
-
-/* ============================================
-   PLACES SIDEBAR
-   ============================================ */
-
-placessidebar {
-    background-color: @surface0;
-    color: @foreground;
-    border-right: 1px solid @border_color;
-}
-
-placessidebar row {
-    background-color: transparent;
-    color: @foreground;
-}
-
-placessidebar row:hover {
-    background-color: @surface1;
-}
-
-placessidebar row:selected {
-    background-color: @surface3;
-    color: @foreground;
-}
-
-/* ============================================
-   RECENT FILES
-   ============================================ */
-
-recent-files {
-    background-color: @background;
-    color: @foreground;
-}
-
-recent-files row {
-    background-color: @surface1;
-    border: 1px solid @border_color;
-    padding: 4px;
-}
-
-recent-files row:hover {
-    background-color: @surface2;
-}
-
-/* ============================================
-   BACKDROP (INACTIVE WINDOW) STATES
-   ============================================ */
-
-:backdrop {
-    background-color: @surface0;
-    color: @bright_black;
-    border-color: @border_inactive;
-}
-
-:backdrop button {
-    background-color: @surface0;
-    color: @bright_black;
-    border-color: @border_inactive;
-}
-
-:backdrop button:hover {
-    background-color: @surface1;
-}
-
-:backdrop entry {
-    background-color: @surface0;
-    color: @bright_black;
-    border-color: @border_inactive;
-}
-
-:backdrop headerbar {
-    background-color: @surface0;
-    color: @bright_black;
-    border-bottom-color: @border_inactive;
-}
-
-/* ============================================
-   LINK VISITED/ACTIVE STATES
-   ============================================ */
-
-*:link {
-    color: @accent_color;
-}
-
-*:link:hover {
-    color: @foreground;
-}
-
-*:link:visited {
-    color: @bright_black;
-}
-
-/* ============================================
-   DRAG & DROP
-   ============================================ */
-
-.drag {
-    background-color: @surface2;
-    border: 1px solid @border_active;
-}
-
-.drop-target {
-    background-color: @surface2;
-    border: 2px solid @border_active;
-}
-
-/* ============================================
-   SELECTION MODE
-   ============================================ */
-
-.selection-mode {
-    background-color: @surface3;
-    color: @foreground;
-}
-
-.selection-mode button {
-    background-color: @surface1;
-    color: @foreground;
-}
-
-.selection-mode button:hover {
-    background-color: @surface2;
-}
-
-/* ============================================
-   END OF GTK THEME
-   ============================================ */
