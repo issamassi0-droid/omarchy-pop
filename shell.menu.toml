@@ -2,11 +2,11 @@
 border = "#efae64"
 border-alpha = 0.6
 background = "#34332f"
-selected-background = "#efae64"
-selected-background-alpha = 0.15
-selected-border = "#efae64"
-selected-border-alpha = 0.5
+selected-background = "#859996"
+selected-background-alpha = 0.1
+selected-border = "#859996"
+selected-border-alpha = 0.4
 selected-border-width = 2
-selected-text = "#e5ba8d"
+selected-text = "#859996"
 scrim = "#2b2a27"
 scrim-alpha = 0.0

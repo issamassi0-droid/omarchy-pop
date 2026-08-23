@@ -94,11 +94,11 @@ BarWidget {
 
   // Surfaces and borders use the bar foreground with higher alphas than the
 // [controls] tokens so the modules read clearly against the bar background.
-  readonly property color surfaceColor: Util.alpha(root.foregroundColor, 0.08)
-  readonly property color surfaceHoverColor: Util.alpha(root.foregroundColor, 0.16)
-  readonly property color borderColor: Util.alpha(root.foregroundColor, 0.45)
+  readonly property color surfaceColor: Util.alpha(root.foregroundColor, 0.06)
+  readonly property color surfaceHoverColor: Util.alpha(root.foregroundColor, 0.14)
+  readonly property color borderColor: Util.alpha(root.foregroundColor, 0.85)
   readonly property color borderHoverColor: root.accentColor
-  readonly property color neonRed: "#e6e3dd"
+  readonly property color neonRed: Color.shellValues["workspace.active"] ? Qt.color(Color.shellValues["workspace.active"]) : "#859996"
   readonly property color neonGreen: "#efae64"
 
   function mixWithBlack(color, amount) {
@@ -108,15 +108,15 @@ BarWidget {
   readonly property color numberFocusColor: root.neonGreen
   readonly property color numberActiveColor: root.bar.background
 
-  // Focused workspace: green bubble @ 0.8, green border @ 0.4
-  readonly property color focusSurfaceColor: Util.alpha(root.neonGreen, 0.1)
-  readonly property color focusBubbleColor: Util.alpha(root.neonGreen, 0.5)
-  readonly property color focusBorderColor: Util.alpha(root.neonGreen, 0.8)
+  // Focused workspace: crisp solid orange
+  readonly property color focusSurfaceColor: Util.alpha(root.neonGreen, 0.18)
+  readonly property color focusBubbleColor: root.neonGreen
+  readonly property color focusBorderColor: root.neonGreen
 
-  // Activated workspace not focused (occupied): red, same alphas
-  readonly property color activeSurfaceColor: Util.alpha(root.neonRed, 0.05)
-  readonly property color activeBubbleColor: Util.alpha(root.neonRed, 0.08)
-  readonly property color activeBorderColor: Util.alpha(root.neonRed, 0.3)
+  // Active (occupied, not focused): crisp solid green
+  readonly property color activeSurfaceColor: Util.alpha(root.neonRed, 0.18)
+  readonly property color activeBubbleColor: root.neonRed
+  readonly property color activeBorderColor: root.neonRed
 
   implicitWidth: root.vertical ? moduleWidth : moduleCount * moduleWidth + moduleGap * (moduleCount - 1) + trailingGap
   implicitHeight: root.vertical ? moduleCount * moduleHeight + moduleGap * (moduleCount - 1) : moduleHeight
@@ -184,97 +184,39 @@ BarWidget {
     width: root.moduleWidth
     height: root.moduleHeight
 
-    // Soft glow shadow behind active/focused workspace surfaces
-    MultiEffect {
-      anchors.fill: parent
-      visible: module.focused || module.active
-      source: moduleSurface
-      shadowEnabled: true
-      shadowColor: module.focused ? root.neonGreen : root.neonRed
-      shadowBlur: 0.6
-      shadowOpacity: 0.7
-      shadowVerticalOffset: 0
-      shadowHorizontalOffset: 0
-    }
-
+    // Crisp, clearly defined surface for each workspace module
     Rectangle {
       id: moduleSurface
       anchors.fill: parent
       radius: 5
-      color: module.focused ? root.focusSurfaceColor : (module.active ? root.activeSurfaceColor : (hoverArea.containsMouse ? root.surfaceHoverColor : root.surfaceColor))
-      border.color: module.focused ? root.focusBorderColor : (hoverArea.containsMouse ? root.borderHoverColor : (module.active ? root.activeBorderColor : root.borderColor))
-      border.width: module.focused || module.active ? 1 : 1
+      color: module.focused ? root.focusSurfaceColor
+            : (module.active ? root.activeSurfaceColor
+               : (hoverArea.containsMouse ? root.surfaceHoverColor : root.surfaceColor))
+      border.color: module.focused ? root.focusBorderColor
+                  : (module.active ? root.activeBorderColor
+                     : (hoverArea.containsMouse ? root.borderHoverColor : root.borderColor))
+      border.width: 1.5
 
-      Behavior on color { ColorAnimation { duration: 150 } }
-      Behavior on border.color { ColorAnimation { duration: 150 } }
+      Behavior on color { ColorAnimation { duration: 120 } }
+      Behavior on border.color { ColorAnimation { duration: 120 } }
 
-      // Soft radial glow behind active/focused workspace bubbles
-      Item {
-        visible: module.focused || module.active
-        anchors.fill: parent
-        readonly property color glowColor: module.focused ? root.neonGreen : root.neonRed
-        readonly property int cx: module.width / 2
-        readonly property int cy: module.height / 2
-
-        Rectangle {
-          width: root.bubbleSize + 12
-          height: root.bubbleSize + 12
-          radius: width / 2
-          color: Util.alpha(parent.glowColor, 0.05)
-          x: Math.round(parent.cx - width / 2)
-          y: Math.round(parent.cy - height / 2)
-        }
-        Rectangle {
-          width: root.bubbleSize + 6
-          height: root.bubbleSize + 6
-          radius: width / 2
-          color: Util.alpha(parent.glowColor, 0.1)
-          x: Math.round(parent.cx - width / 2)
-          y: Math.round(parent.cy - height / 2)
-        }
-        Rectangle {
-          width: root.bubbleSize
-          height: root.bubbleSize
-          radius: root.bubbleRadius
-          color: Util.alpha(parent.glowColor, 0.2)
-          x: Math.round(parent.cx - width / 2)
-          y: Math.round(parent.cy - height / 2)
-        }
-      }
-
-      // Active bubble (number hidden, like c-shell)
-      Rectangle {
-        visible: module.focused || module.active
-        width: root.bubbleSize
-        height: root.bubbleSize
-        radius: root.bubbleRadius
-        color: module.focused ? root.focusBubbleColor : root.activeBubbleColor
-        x: Math.round((module.width - width) / 2)
-        y: Math.round((module.height - height) / 2)
-      }
-
-      // Number
+      // Number — focused shows orange, occupied (active) shows green, empty grey
       Text {
         id: numberLabel
         x: Math.round((module.width - width) / 2)
         y: Math.round((module.height - height) / 2)
         text: module.wsId === 10 ? "0" : String(module.wsId)
-        renderType: Text.QtRendering
-        color: module.focused ? root.numberFocusColor : (module.active ? root.numberActiveColor : (module.occupied ? root.accentColor : root.foregroundColor))
-        opacity: {
-          if (module.focused) return 0.0
-          if (hoverArea.containsMouse) return 1.0
-          if (module.occupied) return 1.0
-          return 0.9
-        }
+        renderType: Text.NativeRendering
+        color: module.focused ? root.numberFocusColor : (module.occupied ? root.neonRed : root.foregroundColor)
+        opacity: hoverArea.containsMouse ? 1.0 : (module.occupied ? 1.0 : 0.85)
         font {
           family: root.fontFamily
           weight: module.occupied ? Font.Bold : Font.Normal
           pixelSize: root.numberSize
         }
 
-        Behavior on color { ColorAnimation { duration: 150 } }
-        Behavior on opacity { NumberAnimation { duration: 150 } }
+        Behavior on color { ColorAnimation { duration: 120 } }
+        Behavior on opacity { NumberAnimation { duration: 120 } }
       }
 
       MouseArea {
@@ -283,14 +225,8 @@ BarWidget {
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
         cursorShape: Qt.PointingHandCursor
-        onEntered: {
-          root.hoveredWsId = module.wsId
-          console.log("[workspaces] hover enter ws", module.wsId)
-        }
-        onExited: {
-          if (root.hoveredWsId === module.wsId) root.hoveredWsId = 0
-          console.log("[workspaces] hover exit ws", module.wsId)
-        }
+        onEntered: { root.hoveredWsId = module.wsId }
+        onExited: { if (root.hoveredWsId === module.wsId) root.hoveredWsId = 0 }
         onClicked: root.focusWorkspace(module.wsId)
       }
     }

@@ -8,7 +8,7 @@ background       = "#34332f"
 background-alpha = 1.0
 text             = "#d1ccc3"
 # Modules calling attention to themselves (recording, voxtype, alerts, updates)
-active           = "#b8705e"
+active           = "#bf7d3f"
 # Cross-axis size at font base-size 12. size-horizontal is the height of
 # top/bottom bars; size-vertical is the width of left/right bars. With
 # scale-with-font enabled, these grow/shrink with [font] base-size.
@@ -179,12 +179,17 @@ selected-border-alpha     = 0.25
 border = "#efae64"
 border-alpha = 0.6
 background = "#34332f"
-selected-background = "#efae64"
-selected-background-alpha = 0.15
-selected-border = "#efae64"
-selected-border-alpha = 0.5
+selected-background = "#859996"
+selected-background-alpha = 0.3
+selected-border = "#859996"
+selected-border-alpha = 1.0
 selected-border-width = 2
-selected-text = "#e5ba8d"
+selected-text = "#859996"
+hover-background = "#859996"
+hover-background-alpha = 0.3
+hover-border = "#859996"
+hover-border-alpha = 1.0
+hover-border-width = 2
 scrim = "#2b2a27"
 scrim-alpha = 0.0
 [polkit]
@@ -236,3 +241,6 @@ selected-border         = "#8ea4a2"
 selected-border-alpha   = 1.0
 unselected-border       = "#d1ccc3"
 unselected-border-alpha = 0.28
+
+[workspace]
+active = "#859996"

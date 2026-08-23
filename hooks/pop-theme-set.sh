@@ -7,8 +7,9 @@
 # - Switches the bar to the stock omarchy.bar and the left widgets to
 #   omarchy.menu + pop.workspace, placing the workspace indicator inline
 #   directly after the menu icon.
-# - Removes the now-unused pop.bar / pop.menu / pop.workspaces plugins.
-# - Restores the default bar for any other theme.
+# - Removes the now-unused pop.* and massi.* custom plugins (bar / menu /
+#   workspaces) so they never linger or conflict with the stock defaults.
+# - Restores the default bar + omarchy.workspaces for any other theme.
 set -u
 
 CURRENT_THEME_DIR="$HOME/.local/state/omarchy/current/theme"
@@ -32,9 +33,11 @@ deploy_workspace() {
   return 0
 }
 
-# Remove the old pop.* plugins so they don't linger or conflict.
+# Remove the old pop.* and massi.* custom plugins so they don't linger or
+# conflict with the stock bar/menu or with the pop.workspace widget.
 cleanup_old_plugins() {
   rm -rf "$PLUGIN_DIR/pop.bar" "$PLUGIN_DIR/pop.menu" "$PLUGIN_DIR/pop.workspaces"
+  rm -rf "$PLUGIN_DIR/massi.bar" "$PLUGIN_DIR/massi.menu" "$PLUGIN_DIR/massi.workspaces"
 }
 
 # Point the bar layout's left widgets at the given ids and make sure the stock
@@ -49,7 +52,7 @@ set_widgets() {
     (.cloneSourceRestores // []) |= map(select(. != "omarchy.menu")) |
     (.bar.layout.left // []) |= map(
         (if (.id == "pop.menu" or .id == "omarchy.menu") then (.id = $m) else . end)
-      | (if (.id == "pop.workspaces" or .id == "omarchy.workspaces") then (.id = $w) else . end)
+       | (if (.id == "pop.workspace" or .id == "omarchy.workspaces") then (.id = $w) else . end)
     )
   ' "$shell" > "$shell.tmp" && mv "$shell.tmp" "$shell"
 }
