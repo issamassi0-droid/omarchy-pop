@@ -1,12 +1,12 @@
 [menu]
 border = "#efae64"
-border-alpha = 0.6
+border-alpha = 0.7
 background = "#333333"
-selected-background = "#859996"
+selected-background = "#5b7a75"
 selected-background-alpha = 0.1
-selected-border = "#859996"
-selected-border-alpha = 0.4
-selected-border-width = 2
-selected-text = "#859996"
+selected-border = "#8dc3bb"
+selected-border-alpha = 0.3
+selected-border-width = 1
+selected-text = "#8dc3bb"
 scrim = "#2b2a27"
 scrim-alpha = 0.0

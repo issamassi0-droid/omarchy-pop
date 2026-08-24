@@ -15,6 +15,7 @@ active           = "#bf7d3f"
 scale-with-font  = true
 size-horizontal  = 26
 size-vertical    = 28
+icon-font        = 16
 
 [hyprland]
 # Shared Hyprland-derived border tokens. Surface sections reference these so
