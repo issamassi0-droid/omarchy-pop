@@ -4,16 +4,9 @@
 #
 # What it does:
 #   1. Clones the theme into ~/.config/omarchy/themes/pop (if not already there).
-#   2. Registers the theme-set hook so the workspace widget (pop.workspace) is
-#      deployed from the theme-root files and the bar is switched to the stock
-#      omarchy.bar with omarchy.menu + pop.workspace on every `omarchy theme set`
-#      for the pop theme. For any other theme the hook restores the stock
-#      omarchy.workspaces widget, so pop.workspace is never applied elsewhere.
-#      The hook self-heals: if workspace.qml / workspace.manifest.json are
-#      missing, it falls back to the stock omarchy.workspaces.
-#   2b. Maps out and removes the legacy massi.* custom plugins (massi.bar,
-#       massi.menu, massi.workspaces) so they can't override the stock
-#       bar/menu or the pop.workspace widget.
+#   2. Registers the theme-set hook so orange window borders are applied and
+#      legacy pop.* / massi.* plugins are cleaned up on every `omarchy theme set`.
+#      The stock omarchy.workspaces widget is used (no custom workspace plugin).
 #   3. Applies the theme (which runs the hook).
 #
 # Usage:
@@ -45,14 +38,17 @@ cp "$THEME_DIR/hooks/pop-theme-set.sh" "$HOOK_DST"
 chmod +x "$HOOK_DST"
 echo "Installed theme-set hook: $HOOK_DST"
 
-# 2b. Map out / remove legacy massi.* custom plugins so the stock defaults and
-#     the pop.workspace widget are used instead.
-echo "Removing legacy massi.* plugins (if present) ..."
-rm -rf "$HOME/.config/omarchy/plugins/massi.bar" \
+# 2b. Remove legacy pop.* and massi.* custom plugins.
+echo "Removing legacy pop.* and massi.* plugins (if present) ..."
+rm -rf "$HOME/.config/omarchy/plugins/pop.bar" \
+       "$HOME/.config/omarchy/plugins/pop.menu" \
+       "$HOME/.config/omarchy/plugins/pop.workspaces" \
+       "$HOME/.config/omarchy/plugins/pop.workspace" \
+       "$HOME/.config/omarchy/plugins/massi.bar" \
        "$HOME/.config/omarchy/plugins/massi.menu" \
        "$HOME/.config/omarchy/plugins/massi.workspaces"
 
-# 3. Apply the theme (runs the hook, with fallback on incomplete plugins).
+# 3. Apply the theme (runs the hook).
 echo "Applying theme '$THEME_NAME' ..."
 omarchy theme set pop
 

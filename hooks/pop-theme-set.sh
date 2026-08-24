@@ -2,13 +2,10 @@
 # Pop theme extras (also handles foggy/sepia), applied on `omarchy theme set`.
 # - Copies the theme's looknfeel.lua (orange #efae64 window border — 2px, 0.75
 #   alpha — with square corners) into the active Hyprland config.
-# - Deploys the theme-bundled workspace widget (root workspace.qml +
-#   workspace.manifest.json) into the live plugin dir as pop.workspace.
-# - Switches the bar to the stock omarchy.bar and the left widgets to
-#   omarchy.menu + pop.workspace, placing the workspace indicator inline
-#   directly after the menu icon.
-# - Removes the now-unused pop.* and massi.* custom plugins (bar / menu /
-#   workspaces) so they never linger or conflict with the stock defaults.
+# - Uses the stock omarchy.workspaces widget (no custom workspace plugin).
+# - Switches the bar to the stock omarchy.bar with omarchy.menu +
+#   omarchy.workspaces on the left.
+# - Removes legacy pop.* and massi.* custom plugins so they never linger.
 # - Restores the default bar + omarchy.workspaces for any other theme.
 set -u
 
@@ -20,23 +17,10 @@ is_custom_theme() {
   omarchy theme current 2>/dev/null | grep -qiE "foggy|sepia|pop"
 }
 
-# Deploy the theme-bundled workspace widget (a single BarWidget + manifest
-# kept at the theme root) into the live plugin dir as pop.workspace.
-deploy_workspace() {
-  local src_dir="$CURRENT_THEME_DIR"
-  local dst="$PLUGIN_DIR/pop.workspace"
-  [[ -f "$src_dir/workspace.qml" && -f "$src_dir/workspace.manifest.json" ]] || return 1
-  rm -rf "$dst"
-  mkdir -p "$dst"
-  cp "$src_dir/workspace.qml" "$dst/workspace.qml"
-  cp "$src_dir/workspace.manifest.json" "$dst/manifest.json"
-  return 0
-}
-
-# Remove the old pop.* and massi.* custom plugins so they don't linger or
-# conflict with the stock bar/menu or with the pop.workspace widget.
+# Remove old pop.* and massi.* custom plugins so they don't conflict.
 cleanup_old_plugins() {
   rm -rf "$PLUGIN_DIR/pop.bar" "$PLUGIN_DIR/pop.menu" "$PLUGIN_DIR/pop.workspaces"
+  rm -rf "$PLUGIN_DIR/pop.workspace"
   rm -rf "$PLUGIN_DIR/massi.bar" "$PLUGIN_DIR/massi.menu" "$PLUGIN_DIR/massi.workspaces"
 }
 
@@ -63,17 +47,10 @@ if is_custom_theme; then
     hyprctl reload >/dev/null 2>&1 || true
   fi
 
-  deploy_workspace
   omarchy bar use omarchy.bar >/dev/null 2>&1 || true
-  set_widgets omarchy.menu pop.workspace
+  set_widgets omarchy.menu omarchy.workspaces
   cleanup_old_plugins
   omarchy-shell shell rescanPlugins >/dev/null 2>&1 || true
-
-  if [[ ! -d "$PLUGIN_DIR/pop.workspace" ]]; then
-    omarchy-notification-send "Pop theme workspace widget missing — falling back to defaults" -t 5000 || true
-    set_widgets omarchy.menu omarchy.workspaces
-    omarchy bar use omarchy.bar >/dev/null 2>&1 || true
-  fi
 else
   cleanup_old_plugins
   omarchy bar use omarchy.bar >/dev/null 2>&1 || true

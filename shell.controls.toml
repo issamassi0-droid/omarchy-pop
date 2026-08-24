@@ -6,18 +6,18 @@
 # N, "Y X", "T X", or "T R B L". Per-side keys like
 # normal-border-width-left override the list. Each *-border accepts either a
 # solid color or a Hyprland-style gradient, e.g. "rgba(...) rgba(...) 45deg".
-normal-color        = "#d1ccc3"
+normal-color        = "#a57030"
 normal-fill-alpha   = 0.04
-normal-border       = "#d1ccc3"
+normal-border       = "#a57030"
 normal-border-width = 1
-normal-border-alpha = 0.4
+normal-border-alpha = 0.7
 
 # Hover-cursor: mouse hover and the panel keyboard cursor.
 hover-cursor-color        = "#859996"
 hover-cursor-fill-alpha   = 0.15
-hover-cursor-border       = "#859996"
+hover-cursor-border       = "#a57030"
 hover-cursor-border-width = 1
-hover-cursor-border-alpha = 0.6
+hover-cursor-border-alpha = 0.7
 
 # Focus: Qt activeFocus. Mirror the hover-cursor values by default so
 # mouse hover, keyboard cursor, and tab focus all read as the same state
@@ -29,11 +29,11 @@ focus-border-width = 1
 focus-border-alpha = 0.9
 
 # Selected: persistent chosen/current state.
-selected-color        = "#d1ccc3"
-selected-fill-alpha   = 0.18
-selected-border       = "#d1ccc3"
-selected-border-width = 0
-selected-border-alpha = 1.0
+selected-color        = "#a57030"
+selected-fill-alpha   = 0.2
+selected-border       = "#a57030"
+selected-border-width = 1
+selected-border-alpha = 0.7
 
 # Momentary fills.
 pressed-fill-alpha   = 0.22
