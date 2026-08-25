@@ -1,7 +1,7 @@
 [menu]
 border = "#efae64"
-border-alpha = 0.7
-background = "#333333"
+border-alpha = 0.5
+background = "#2c2b2a"
 selected-background = "#5b7a75"
 selected-background-alpha = 0.1
 selected-border = "#8dc3bb"

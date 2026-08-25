@@ -5,11 +5,11 @@ import QtQuick 2.15
 
 QtObject {
     // Base Colors
-    readonly property color background: "#333333"
+    readonly property color background: "#2c2b2a"
     readonly property color foreground: "#d1ccc3"
 
     // Surface Colors
-    readonly property color surface0: "#333333"
+    readonly property color surface0: "#2c2b2a"
     readonly property color surface1: "#505048"
     readonly property color surface2: "#686860"
     readonly property color surface3: "#909080"
