@@ -63,8 +63,8 @@ BarWidget {
   readonly property color bgBorder: Qt.rgba(65/255, 95/255, 105/255, 0.55)
   readonly property color hoverColor: Qt.rgba(45/255, 65/255, 70/255, 0.42)
   readonly property color hoverBorder: Qt.rgba(75/255, 110/255, 120/255, 0.65)
-  readonly property color focusColor: Qt.rgba(180/255, 85/255, 50/255, 0.3)
-  readonly property color focusBorder: Qt.rgba(195/255, 100/255, 60/255, 0.4)
+  readonly property color focusColor: Qt.rgba(180/255, 85/255, 50/255, 0.18)
+  readonly property color focusBorder: Qt.rgba(195/255, 100/255, 60/255, 0.35)
   readonly property color urgentColor: "#f38ba8"
   readonly property color urgentBorder: "#ff6b8a"
   readonly property color glowColor: "#efae64"
@@ -100,7 +100,7 @@ BarWidget {
           height: root.pillH
           radius: 5
           color: focused ? root.focusColor : (hovered ? root.hoverColor : root.bgColor)
-          border.width: focused ? 2 : 1
+          border.width: focused ? 1 : 1
           border.color: focused ? root.focusBorder : (hovered ? root.hoverBorder : root.bgBorder)
 
           Behavior on width { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
@@ -111,23 +111,13 @@ BarWidget {
           Text {
             anchors.centerIn: parent
             text: pill.modelData === 10 ? "0" : String(pill.modelData)
-            color: pill.focused ? root.glowColor : (pill.occupied ? "#d1ccc3" : "#909080")
+            color: pill.focused ? "#e0a850" : (pill.occupied ? "#359a8d" : "#909080")
             font.family: root.ff
             font.pixelSize: Style.font.body
-            font.bold: pill.focused
+            font.bold: false
             renderType: Text.NativeRendering
 
             Behavior on color { ColorAnimation { duration: 100 } }
-
-            layer.enabled: pill.focused
-            layer.effect: MultiEffect {
-              shadowEnabled: true
-              shadowColor: root.glowColor
-              shadowVerticalOffset: 0
-              shadowHorizontalOffset: 0
-              shadowBlur: 0.8
-              shadowScale: 1.0
-            }
           }
 
           MouseArea {

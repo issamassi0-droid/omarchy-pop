@@ -127,7 +127,7 @@ base-size = 12
 # individual border-width-top/right/bottom/left keys override the list.
 background          = "#2c2b2a"
 background-alpha    = 0.98
-    text             = "#d1ccc3"
+text             = "#a09e96"
     border           = "#efae64"
     border-alpha     = 0.98
     border-width     = 1
@@ -177,8 +177,9 @@ selected-border           = "hyprland.active-border-foreground"
 selected-border-alpha     = 0.25
 
 [menu]
-border = "#efae64"
+border = "#4e7e76"
 border-alpha = 0.95
+border-width = 1.5
 background = "#2c2b2a"
 background-alpha = 0.98
 selected-background = "#efae64"
