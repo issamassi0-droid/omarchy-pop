@@ -4,9 +4,9 @@
 #
 # What it does:
 #   1. Clones the theme into ~/.config/omarchy/themes/pop (if not already there).
-#   2. Registers the theme-set hook so orange window borders are applied and
-#      legacy pop.* / massi.* plugins are cleaned up on every `omarchy theme set`.
-#      The stock omarchy.workspaces widget is used (no custom workspace plugin).
+#   2. Registers the theme-set hook so orange window borders are applied,
+#      legacy pop.* / massi.* plugins are cleaned up, and the custom
+#      pop.workspace plugin is installed on every `omarchy theme set`.
 #   3. Applies the theme (which runs the hook).
 #
 # Usage:
@@ -38,17 +38,7 @@ cp "$THEME_DIR/hooks/pop-theme-set.sh" "$HOOK_DST"
 chmod +x "$HOOK_DST"
 echo "Installed theme-set hook: $HOOK_DST"
 
-# 2b. Remove legacy pop.* and massi.* custom plugins.
-echo "Removing legacy pop.* and massi.* plugins (if present) ..."
-rm -rf "$HOME/.config/omarchy/plugins/pop.bar" \
-       "$HOME/.config/omarchy/plugins/pop.menu" \
-       "$HOME/.config/omarchy/plugins/pop.workspaces" \
-       "$HOME/.config/omarchy/plugins/pop.workspace" \
-       "$HOME/.config/omarchy/plugins/massi.bar" \
-       "$HOME/.config/omarchy/plugins/massi.menu" \
-       "$HOME/.config/omarchy/plugins/massi.workspaces"
-
-# 3. Apply the theme (runs the hook).
+# 3. Apply the theme (runs the hook which installs pop.workspace plugin).
 echo "Applying theme '$THEME_NAME' ..."
 omarchy theme set pop
 

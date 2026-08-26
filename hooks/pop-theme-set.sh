@@ -18,13 +18,25 @@ is_custom_theme() {
   omarchy theme current 2>/dev/null | grep -qiE "foggy|sepia|pop"
 }
 
-# Remove old pop.* and massi.* cloned plugins so they don't conflict.
+# Remove legacy pop.* and massi.* cloned plugins so they don't conflict.
 cleanup_old_plugins() {
   rm -rf \
     "$PLUGIN_DIR/pop.bar" "$PLUGIN_DIR/pop.menu" \
-    "$PLUGIN_DIR/pop.workspaces" "$PLUGIN_DIR/pop.workspace" \
+    "$PLUGIN_DIR/pop.workspaces" \
     "$PLUGIN_DIR/massi.bar" "$PLUGIN_DIR/massi.menu" \
     "$PLUGIN_DIR/massi.workspaces"
+}
+
+# Ensure shell.json exists before patching. On a fresh install the user file
+# may not exist yet; copy the bundled default so patch_left_widgets has
+# something to work with.
+ensure_shell_config() {
+  [[ -f "$SHELL_CONFIG" ]] && return 0
+  local default="/usr/share/omarchy/config/omarchy/shell.json"
+  if [[ -f "$default" ]]; then
+    mkdir -p "$(dirname "$SHELL_CONFIG")"
+    cp "$default" "$SHELL_CONFIG"
+  fi
 }
 
 # Point the bar layout's left widgets at the given ids. Only touches keys that
@@ -32,6 +44,7 @@ cleanup_old_plugins() {
 # missing paths.
 patch_left_widgets() {
   local menu="$1" works="$2"
+  ensure_shell_config
   [[ -f "$SHELL_CONFIG" ]] || return 0
   command -v jq >/dev/null 2>&1 || return 0
 
@@ -47,7 +60,26 @@ patch_left_widgets() {
 
 cleanup_old_plugins
 omarchy bar use omarchy.bar >/dev/null 2>&1 || true
-patch_left_widgets omarchy.menu omarchy.workspaces
+
+# Install pop.workspace plugin from theme if available.
+install_pop_workspace() {
+  local THEME_WS="$CURRENT_THEME_DIR/workspace.qml"
+  local THEME_MF="$CURRENT_THEME_DIR/workspace.manifest.json"
+  if [[ -f "$THEME_WS" && -f "$THEME_MF" ]]; then
+    mkdir -p "$PLUGIN_DIR/pop.workspace"
+    cp "$THEME_MF" "$PLUGIN_DIR/pop.workspace/manifest.json"
+    cp "$THEME_WS" "$PLUGIN_DIR/pop.workspace/workspace.qml"
+    patch_left_widgets omarchy.menu pop.workspace
+  else
+    patch_left_widgets omarchy.menu omarchy.workspaces
+  fi
+}
+
+if is_custom_theme; then
+  install_pop_workspace
+else
+  patch_left_widgets omarchy.menu omarchy.workspaces
+fi
 
 if is_custom_theme; then
   if [[ -f "$CURRENT_THEME_DIR/looknfeel.lua" ]]; then
