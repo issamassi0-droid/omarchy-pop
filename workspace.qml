@@ -18,7 +18,7 @@ BarWidget {
   }
 
   function workspaceIds() {
-    var ids = [1, 2, 3, 4, 5]
+    var ids = [1, 2, 3, 4, 5, 6, 7]
     var values = Hyprland.workspaces.values
     for (var i = 0; i < values.length; i++) {
       var id = values[i].id
@@ -54,17 +54,19 @@ BarWidget {
   readonly property string ff: root.bar ? root.bar.fontFamily : Style.font.family
 
   readonly property int wsCount: workspaceIds().length
-  readonly property int pillW: 18
+  readonly property int pillW: 20
   readonly property int focusedW: 34
-  readonly property int pillH: 16
+  readonly property int pillH: 18
   readonly property int pillGap: 3
 
-  readonly property color bgColor: Qt.rgba(45/255, 65/255, 70/255, 0.28)
-  readonly property color bgBorder: Qt.rgba(65/255, 95/255, 105/255, 0.55)
-  readonly property color hoverColor: Qt.rgba(45/255, 65/255, 70/255, 0.42)
-  readonly property color hoverBorder: Qt.rgba(75/255, 110/255, 120/255, 0.65)
-  readonly property color focusColor: Qt.rgba(180/255, 85/255, 50/255, 0.18)
-  readonly property color focusBorder: Qt.rgba(195/255, 100/255, 60/255, 0.35)
+  readonly property color bgColor: Qt.rgba(30/255, 45/255, 50/255, 0.45)
+  readonly property color bgBorder: Qt.rgba(50/255, 75/255, 85/255, 1.0)
+  readonly property color hoverColor: Qt.rgba(25/255, 40/255, 45/255, 0.7)
+  readonly property color hoverBorder: Qt.rgba(60/255, 90/255, 100/255, 1.0)
+  readonly property color occupiedColor: Qt.rgba(50/255, 140/255, 160/255, 0.22)
+  readonly property color occupiedBorder: Qt.rgba(60/255, 160/255, 180/255, 0.6)
+  readonly property color focusColor: Qt.rgba(225/255, 60/255, 25/255, 0.3)
+  readonly property color focusBorder: Qt.rgba(235/255, 75/255, 35/255, 0.7)
   readonly property color urgentColor: "#f38ba8"
   readonly property color urgentBorder: "#ff6b8a"
   readonly property color glowColor: "#efae64"
@@ -75,7 +77,7 @@ BarWidget {
 
   Rectangle {
     anchors.fill: parent
-    anchors.topMargin: -2
+    anchors.topMargin: -1
     radius: 5
     color: "transparent"
 
@@ -99,9 +101,9 @@ BarWidget {
           width: focused ? root.focusedW : root.pillW
           height: root.pillH
           radius: 5
-          color: focused ? root.focusColor : (hovered ? root.hoverColor : root.bgColor)
+          color: focused ? root.focusColor : (occupied ? root.occupiedColor : (hovered ? root.hoverColor : root.bgColor))
           border.width: focused ? 1 : 1
-          border.color: focused ? root.focusBorder : (hovered ? root.hoverBorder : root.bgBorder)
+          border.color: focused ? root.focusBorder : (occupied ? root.occupiedBorder : (hovered ? root.hoverBorder : root.bgBorder))
 
           Behavior on width { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
           Behavior on height { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
@@ -111,7 +113,7 @@ BarWidget {
           Text {
             anchors.centerIn: parent
             text: pill.modelData === 10 ? "0" : String(pill.modelData)
-            color: pill.focused ? "#e0a850" : (pill.occupied ? "#359a8d" : "#909080")
+            color: pill.focused ? "#ffd070" : (pill.occupied ? "#20c0b3" : "#d0d0c0")
             font.family: root.ff
             font.pixelSize: Style.font.body
             font.bold: false
