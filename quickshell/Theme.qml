@@ -6,7 +6,7 @@ import QtQuick 2.15
 QtObject {
     id: theme
     readonly property int fontSize: 13
-    readonly property string fontFamily: "Hermes Maia T4"}
+    readonly property string fontFamily: "Inter"}
 
     // Base Colors
     readonly property color background: "#2c2b2a"
@@ -44,9 +44,8 @@ QtObject {
     readonly property color shadow: Qt.rgba(0, 0, 0, 0.267)
 
     // Typography
-    readonly property int fontSize: 13
-    // Dynamically returns loaded font family name, fallback to string if unresolved
-    readonly property string fontFamily: customFont.name !== "" ? customFont.name : "Hermes Maia T4"
+    // readonly property int fontSize: 13  // duplicated, removed
+    // readonly property string fontFamily: customFont.name !== "" ? customFont.name : "Hermes Maia T4"  // removed – using system default
 
     // Layout
     readonly property int borderRadius: 0
