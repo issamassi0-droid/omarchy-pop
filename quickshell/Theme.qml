@@ -2,11 +2,18 @@
 // Omarchy Theme - Modified Pop for Quickshell
 pragma Singleton
 import QtQuick 2.15
+import Qt.labs.settings 1.0
 
 QtObject {
     id: theme
     readonly property int fontSize: 13
-    readonly property string fontFamily: "Inter"}
+    Settings {
+        id: fontSettings
+        fileName: Qt.resolvedUrl("file://${HOME}/.config/omarchy/themes/pop/font_override.json")
+        property string fontFamily: "Inter"
+    }
+    readonly property string fontFamily: fontSettings.fontFamily}
+
 
     // Base Colors
     readonly property color background: "#2c2b2a"
