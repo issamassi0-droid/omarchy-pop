@@ -4,6 +4,10 @@ pragma Singleton
 import QtQuick 2.15
 
 QtObject {
+    id: theme
+    readonly property int fontSize: 13
+    readonly property string fontFamily: "Hermes Maia T4"}
+
     // Base Colors
     readonly property color background: "#2c2b2a"
     readonly property color foreground: "#d1ccc3"
@@ -37,11 +41,12 @@ QtObject {
     readonly property color selectionText: foreground
 
     // Shadow
-    readonly property color shadow: Qt.rgba(0, 0, 0, 0.267) // 0.267 = 44/255
+    readonly property color shadow: Qt.rgba(0, 0, 0, 0.267)
 
     // Typography
     readonly property int fontSize: 13
-    readonly property string fontFamily: "JetBrainsMono Nerd Font, sans-serif"
+    // Dynamically returns loaded font family name, fallback to string if unresolved
+    readonly property string fontFamily: customFont.name !== "" ? customFont.name : "Hermes Maia T4"
 
     // Layout
     readonly property int borderRadius: 0

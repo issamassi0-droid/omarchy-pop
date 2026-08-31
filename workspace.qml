@@ -35,6 +35,7 @@ BarWidget {
 
   property int hoveredWsId: 0
   property var moduleItems: []
+  property int _pillCounter: 0
 
   function triggerPress(button) {
     focusWorkspace(hoveredWsId || currentWsId)
@@ -57,18 +58,18 @@ BarWidget {
   readonly property int pillW: 20
   readonly property int focusedW: 34
   readonly property int pillH: 18
-  readonly property int pillGap: 3
+  readonly property int pillGap: 1
 
-  readonly property color bgColor: Qt.rgba(30/255, 45/255, 50/255, 0.45)
-  readonly property color bgBorder: Qt.rgba(50/255, 75/255, 85/255, 1.0)
+  readonly property color bgColor: Qt.rgba(44/255, 43/255, 42/255, 0.45)
+  readonly property color bgBorder: Qt.rgba(235/255, 160/255, 60/255, 0.2)
   readonly property color hoverColor: Qt.rgba(25/255, 40/255, 45/255, 0.7)
   readonly property color hoverBorder: Qt.rgba(60/255, 90/255, 100/255, 1.0)
-  readonly property color occupiedColor: Qt.rgba(50/255, 140/255, 160/255, 0.22)
-  readonly property color occupiedBorder: Qt.rgba(60/255, 160/255, 180/255, 0.6)
-  readonly property color focusColor: Qt.rgba(225/255, 60/255, 25/255, 0.3)
-  readonly property color focusBorder: Qt.rgba(235/255, 75/255, 35/255, 0.7)
-  readonly property color urgentColor: "#f38ba8"
-  readonly property color urgentBorder: "#ff6b8a"
+  readonly property color occupiedColor: Qt.rgba(239/255, 174/255, 100/255, 0.13)
+  readonly property color occupiedBorder: Qt.rgba(235/255, 160/255, 60/255, 0.38)
+  readonly property color focusColor: Qt.rgba(225/255, 60/255, 25/255, 0.17)
+  readonly property color focusBorder: Qt.rgba(235/255, 75/255, 35/255, 0.45)
+  readonly property color urgentColor: "#ff0000"
+  readonly property color urgentBorder: "#ffa500"
   readonly property color glowColor: "#efae64"
   readonly property color glowColorDim: Qt.rgba(239/255, 174/255, 100/255, 0.4)
 
@@ -77,8 +78,8 @@ BarWidget {
 
   Rectangle {
     anchors.fill: parent
-    anchors.topMargin: -1
-    radius: 5
+    anchors.topMargin: 0
+    radius: 3
     color: "transparent"
 
     Row {
@@ -92,34 +93,36 @@ BarWidget {
         delegate: Rectangle {
           id: pill
           required property int modelData
+          readonly property string _pillId: String(modelData)
 
           readonly property var ws: root.workspaceById(modelData)
           readonly property bool occupied: ws !== null && ws.toplevels.values.length > 0
+          readonly property bool urgent: ws !== null && ws.urgent
           readonly property bool focused: root.currentWsId === modelData
           readonly property bool hovered: hArea.containsMouse
 
           width: focused ? root.focusedW : root.pillW
           height: root.pillH
-          radius: 5
-          color: focused ? root.focusColor : (occupied ? root.occupiedColor : (hovered ? root.hoverColor : root.bgColor))
+          radius: 1
+          color: urgent ? root.urgentColor : (focused ? root.focusColor : (occupied ? root.occupiedColor : (hovered ? root.hoverColor : root.bgColor)))
           border.width: focused ? 1 : 1
-          border.color: focused ? root.focusBorder : (occupied ? root.occupiedBorder : (hovered ? root.hoverBorder : root.bgBorder))
+          border.color: urgent ? root.urgentBorder : (focused ? root.focusBorder : (occupied ? root.occupiedBorder : (hovered ? root.hoverBorder : root.bgBorder)))
 
-          Behavior on width { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
-          Behavior on height { NumberAnimation { duration: 100; easing.type: Easing.OutCubic } }
-          Behavior on color { ColorAnimation { duration: 100 } }
-          Behavior on border.color { ColorAnimation { duration: 100 } }
+          Behavior on width { NumberAnimation { duration: 50; easing.type: Easing.OutCubic } }
+          Behavior on height { NumberAnimation { duration: 50; easing.type: Easing.OutCubic } }
+          Behavior on color { ColorAnimation { duration: 50 } }
+          Behavior on border.color { ColorAnimation { duration: 50 } }
 
           Text {
             anchors.centerIn: parent
             text: pill.modelData === 10 ? "0" : String(pill.modelData)
-            color: pill.focused ? "#ffd070" : (pill.occupied ? "#20c0b3" : "#d0d0c0")
+            color: pill.focused ? "#e0a45f" : (pill.occupied ? "#efae64" : "#d1ccc3")
             font.family: root.ff
             font.pixelSize: Style.font.body
             font.bold: false
             renderType: Text.NativeRendering
 
-            Behavior on color { ColorAnimation { duration: 100 } }
+            Behavior on color { ColorAnimation { duration: 50 } }
           }
 
           MouseArea {
@@ -134,11 +137,11 @@ BarWidget {
           }
 
           Component.onCompleted: {
-            root.moduleItems = root.moduleItems.concat([pill])
+            root.moduleItems = root.moduleItems.concat([{id: _pillId, ref: pill}])
             if (root.bar) root.bar.registerClickTarget(pill)
           }
           Component.onDestruction: {
-            root.moduleItems = root.moduleItems.filter(function(x) { return x !== pill })
+            root.moduleItems = root.moduleItems.filter(function(x) { return x.id !== _pillId })
             if (root.bar) root.bar.unregisterClickTarget(pill)
           }
         }
