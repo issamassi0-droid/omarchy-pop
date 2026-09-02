@@ -2,19 +2,11 @@
 // Omarchy Theme - Modified Pop for Quickshell
 pragma Singleton
 import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import Qt.labs.settings 1.0
 
 QtObject {
-    id: theme
-    readonly property int fontSize: 13
-    Settings {
-        id: fontSettings
-        fileName: Qt.resolvedUrl("file://${HOME}/.config/omarchy/themes/pop/font_override.json")
-        property string fontFamily: "Inter"
-    }
-    readonly property string fontFamily: fontSettings.fontFamily}
-
-
     // Base Colors
     readonly property color background: "#2c2b2a"
     readonly property color foreground: "#d1ccc3"
@@ -67,4 +59,23 @@ QtObject {
     // Panel specific
     readonly property int panelRadius: 8
     readonly property real panelOpacity: 0.95
+}
+ApplicationWindow {
+    visible: true
+    width: 800
+    height: 200
+    title: qsTr("Quickshell Custom Font Demo")
+
+    /* Set the global Qt Quick theme font */
+    theme: Theme {
+        /* <--- change font family or size here ---- */
+        font.family: "Monolisa"
+        font.pixelSize: 14
+    }
+
+    // Example text to show the font
+    Text {
+        anchors.centerIn: parent
+        text: "Hello – Font is MonoLisa"
+    }
 }
